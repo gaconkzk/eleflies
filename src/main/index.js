@@ -27,7 +27,8 @@ function createWindow () {
 
   mainWindow.loadURL(winURL)
 
-  mainWindow.webContents.openDevTools()
+  // enable when need debug console
+  // mainWindow.webContents.openDevTools()
 
   mainWindow.on('closed', () => {
     mainWindow = null

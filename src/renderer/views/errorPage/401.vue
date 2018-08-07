@@ -4,21 +4,18 @@
     el-row
       el-col(:span="12")
         h1.text-jumbo.text-ginormous Oops!
-        | gif来源
-        a(href='https://zh.airbnb.com/' target='_blank') airbnb
-        | 页面
-        h2 你没有权限去该页面
-        h6 如有不满请联系你领导
+        | You don't have permission
+        h2 Eleflies Utilities
+        h6 better than nothing
         ul.list-unstyled
-          li 或者你可以去:
+          li You can choose:
           li.link-type
-            router-link(to="/dashboard") 回首页
-          li.link-type <a href="https://www.taobao.com/">随便看看</a></li>
+            router-link(to="/dashboard") Dashboard
           li
-            a(@click.prevent="dialogVisible=true" href="#")
+            a(@click.prevent="dialogVisible=true" href="#") Ahihi
       el-col(:span="12")
         img(:src="errGif" width="313" height="428" alt="Girl has dropped her ice cream.")
-    el-dialog(title="随便看" :visible.sync="dialogVisible")
+    el-dialog(title="Ahihi" :visible.sync="dialogVisible")
       img.pan-img(:src="ewizardClap")
 </template>
 

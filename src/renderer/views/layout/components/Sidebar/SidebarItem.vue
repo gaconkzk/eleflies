@@ -24,7 +24,7 @@
               span(v-if="child.meta&&child.meta.title" slot="title") {{generateTitle(child.meta.title)}}
 </template>
 <script>
-import path from 'path'
+// import path from 'path'
 import { generateTitle } from '@/utils/i18n'
 
 export default {
@@ -66,8 +66,8 @@ export default {
       return false
     },
     resolvePath(...paths) {
-      // return this.basePath + '/' + paths
-      return path.resolve(this.basePath, ...paths)
+      return this.basePath + '/' + paths
+      // return path.resolve(this.basePath, ...paths)
     },
     generateTitle
   }

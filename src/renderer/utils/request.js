@@ -1,6 +1,7 @@
 import axios from 'axios'
-import { Message } from 'element-ui'
-import { getToken } from '@/utils/auth'
+import { Message, MessageBox } from 'element-ui'
+import store from '../store'
+// import { getToken } from '@/utils/auth'
 
 const service = axios.create({
   baseURL: process.env.BASE_API,
@@ -8,8 +9,8 @@ const service = axios.create({
 })
 
 service.interceptors.request.use(config => {
-  if (getToken()) {
-    config.headers['X-Token'] = getToken()
+  if (store.getters.token) {
+    config.headers['X-Token'] = store.getters.token
   }
   return config
 }, error => {
@@ -20,31 +21,31 @@ service.interceptors.request.use(config => {
 
 service.interceptors.response.use(
   response => response,
-  // response => {
-  //   const res = response.data
-  //   if (res.code !== 20000) {
-  //     Message({
-  //       message: res.message,
-  //       type: 'error',
-  //       duration: 5 * 1000
-  //     })
+  response => {
+    const res = response.data
+    if (res.code !== 20000) {
+      Message({
+        message: res.message,
+        type: 'error',
+        duration: 5 * 1000
+      })
 
-  //     if (res.code === 50008 || res.code === 50012 || res.code === 50014) {
-  //       MessageBox.confirm('What the fuck', 'fffck', {
-  //         confirmButtonText: 'OK',
-  //         cancelButtonText: 'Cancel',
-  //         type: 'warning'
-  //       }).then(() => {
-  //         store.dispatch('FedLogOut').then(() => {
-  //           location.reload()
-  //         })
-  //       })
-  //     }
-  //     return Promise.reject(new Error('error'))
-  //   } else {
-  //     return response.data
-  //   }
-  // },
+      if (res.code === 50008 || res.code === 50012 || res.code === 50014) {
+        MessageBox.confirm('What the fuck', 'fffck', {
+          confirmButtonText: 'OK',
+          cancelButtonText: 'Cancel',
+          type: 'warning'
+        }).then(() => {
+          store.dispatch('FedLogOut').then(() => {
+            location.reload()
+          })
+        })
+      }
+      return Promise.reject(new Error('error'))
+    } else {
+      return response.data
+    }
+  },
   error => {
     console.log('err' + error)// for debug
     Message({
