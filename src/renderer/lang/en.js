@@ -60,7 +60,10 @@ export default {
     exportZip: 'Export Zip',
     theme: 'Theme',
     clipboardDemo: 'Clipboard',
-    i18n: 'I18n'
+    i18n: 'I18n',
+    createCluster: 'Create Cluster',
+    editCluster: 'Edit Cluster',
+    'kafka-connect': 'Kafka Connect'
   },
   navbar: {
     logOut: 'Log Out',

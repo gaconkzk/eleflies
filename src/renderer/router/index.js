@@ -79,6 +79,20 @@ export const asyncRouterMap = [
     }]
   },
   {
+    path: '/kafka-connect',
+    component: Layout,
+    redirect: '/kafka-connect/list',
+    name: 'kafka-connect',
+    meta: {
+      title: 'kafka-connect',
+      icon: 'kafka-connect' // kafka connect icon
+    },
+    children: [
+      { path: 'create', component: () => import('@/views/kafka-connect/create'), name: 'createCluster', meta: { title: 'createCluster', icon: 'edit' } },
+      { path: 'edit/:id(\\d+)', component: () => import('@/views/kafka-connect/edit'), name: 'editCluster', meta: { title: 'editCluster', noCache: true }, hidden: true }
+    ]
+  },
+  {
     path: '/error',
     component: Layout,
     redirect: 'noredirect',
