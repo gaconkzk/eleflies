@@ -67,13 +67,14 @@ export default {
   methods: {
     getList() {
       this.listLoading = true
-      fetchList(this.listQuery).then(response => {
-        const items = response.data.items
-        this.list = items.map(v => {
-          this.$set(v, 'edit', false) // https://vuejs.org/v2/guide/reactivity.html
-          v.originalTitle = v.title //  will be used when user click the cancel botton
-          return v
-        })
+      fetchList('https://cp1.demo.playground.landoop.com/api/kafka-connect/', this.listQuery).then(response => {
+        console.log(response.data)
+        // const items = response.data.items
+        // this.list = items.map(v => {
+        //   this.$set(v, 'edit', false) // https://vuejs.org/v2/guide/reactivity.html
+        //   v.originalTitle = v.title //  will be used when user click the cancel botton
+        //   return v
+        // })
         this.listLoading = false
       })
     },

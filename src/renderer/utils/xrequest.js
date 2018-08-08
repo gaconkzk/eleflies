@@ -9,9 +9,9 @@ const xservice = axios.create({
 })
 
 xservice.interceptors.request.use(config => {
-  if (store.getters.token) {
-    config.headers['X-Token'] = store.getters.token
-  }
+//   if (store.getters.token) {
+//     config.headers['X-Token'] = store.getters.token
+//   }
   return config
 }, error => {
   // Do something with request error
@@ -23,6 +23,14 @@ xservice.interceptors.response.use(
   response => response,
   response => {
     const res = response.data
+    if (!res) {
+      Message({
+        message: 'Not found',
+        type: 'error',
+        duration: 5 * 1000
+      })
+      return Promise.reject(new Error('error'))
+    }
     if (res.code !== 20000) {
       Message({
         message: res.message,
