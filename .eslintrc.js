@@ -35,5 +35,6 @@ module.exports = {
     // disable this
     'space-before-function-paren': 0,
     'no-control-regex': 0,
+    'camelcase': 0
   }
 }

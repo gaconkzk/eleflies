@@ -57,4 +57,4 @@ xservice.interceptors.response.use(
   }
 )
 
-export default service
+export default xservice
