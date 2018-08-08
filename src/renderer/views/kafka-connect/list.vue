@@ -36,7 +36,7 @@
 </template>
 
 <script>
-import { fetchList } from '@/api/article'
+import { fetchList } from '@/api/kafka-connect'
 
 export default {
   name: 'clusterList',
