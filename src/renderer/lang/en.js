@@ -63,6 +63,7 @@ export default {
     i18n: 'I18n',
     createCluster: 'Create Cluster',
     editCluster: 'Edit Cluster',
+    clusterList: 'Clusters',
     'kafka-connect': 'Kafka Connect'
   },
   navbar: {

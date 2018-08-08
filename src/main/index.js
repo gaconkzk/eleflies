@@ -30,6 +30,12 @@ function createWindow () {
   // enable when need debug console
   // mainWindow.webContents.openDevTools()
 
+  // enable when need maximize
+  mainWindow.maximize()
+
+  // no menu
+  mainWindow.setMenu(null)
+
   mainWindow.on('closed', () => {
     mainWindow = null
   })

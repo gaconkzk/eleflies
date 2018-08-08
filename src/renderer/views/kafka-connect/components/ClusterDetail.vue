@@ -8,7 +8,7 @@
         el-row
           el-col(:span=24)
             el-form-item(style="margin-bottom: 40px" prop="rest_url")
-              MDinput(name="name" v-model="postForm['rest_url']" required :maxlength=100) Rest URLs
+              MDinput(name="name" v-model="postForm.rest_url" required :maxlength=100) Rest URLs
 </template>
 
 <script>
@@ -17,7 +17,7 @@ import Sticky from '@/components/Sticky'
 import { validateURL } from '@/utils/validate'
 
 const defaultForm = {
-  rest_url: 'localhost:8084'
+  restUrls: 'localhost:8084'
 }
 
 export default {
@@ -32,14 +32,20 @@ export default {
   data() {
     const validatorRestUris = (rule, value, callback) => {
       if (value) {
-        if (validateURL(value)) {
+        let errors = value.split(',').map(url => url.trim())
+          .filter(url => {
+            console.log(url)
+            return !validateURL(url)
+          })
+
+        if (errors.length === 0) {
           callback()
         } else {
           this.$message({
-            message: 'error wrong rest urls',
+            message: 'Invalid URL format. ' + errors.join(),
             type: 'error'
           })
-          callback(null)
+          callback(errors)
         }
       } else {
         callback()
