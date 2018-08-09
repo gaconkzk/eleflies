@@ -18,6 +18,8 @@ import '@/mock' // simulation data
 
 import * as filters from '@/filters' // global filters
 
+import 'electron-cookies'
+
 if (!process.env.IS_WEB) Vue.use(require('vue-electron'))
 
 Vue.use(ElementUI, {

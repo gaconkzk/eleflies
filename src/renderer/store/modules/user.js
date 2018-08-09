@@ -60,7 +60,7 @@ const user = {
 
     GetUserInfo({ commit, state }) {
       return new Promise((resolve, reject) => {
-        getUserInfo(state.token).then(response => {
+        getUserInfo(getToken()).then(response => {
           if (!response.data) {
             reject(new Error('error trying login'))
           }

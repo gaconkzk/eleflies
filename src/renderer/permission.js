@@ -6,7 +6,7 @@ import 'nprogress/nprogress.css'
 
 import { Message } from 'element-ui'
 
-// import { getToken } from '@/utils/auth' // getToken from cookie
+import { getToken } from '@/utils/auth' // getToken from cookie
 
 NProgress.configure({ showSpinner: false })// NProgress Configuration
 
@@ -21,7 +21,8 @@ const whiteList = ['/login', '/authredirect'] // no redirect whitelist
 
 router.beforeEach((to, from, next) => {
   NProgress.start()
-  if (store.getters.token) {
+  // if (store.getters.token) {
+  if (getToken()) {
     if (to.path === '/login') {
       next({ path: '/' })
       NProgress.done() // current page is dashboard will not trigger afterEach hook, so manually handle it

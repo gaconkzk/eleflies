@@ -1,53 +1,93 @@
 <template lang="pug">
   .app-container
+    el-form(ref="form" :model="form" label-width="120px" :rules="rules" )
+      el-form-item(label="Name" prop="name")
+        el-input(v-model="form.name")
+      el-form-item(label="Endpoint:" prop="url")
+        el-input(v-model="form.url")
+      el-form-item
+        el-button(type="primary" @click="addCluster") Add
+      
     el-table(:data="list" v-loading.body="listLoading" border fit highlight-current-row style="width: 100%")
-      el-table-column(align="center" label="ID" width="80")
-        template(slot-scope="scope")
-          span {{scope.row.id}}
 
-      el-table-column(width="180px" align="center" label="Date")
-        template(slot-scope="scope")
-          span {{scope.row.timestamp | parseTime('{y}-{m}-{d} {h}:{i}')}}
-
-      el-table-column(width="120px" align="center" label="Author")
-        template(slot-scope="scope")
-          span {{scope.row.author}}
-
-      el-table-column(width="100px" label="Importance")
-        template(slot-scope="scope")
-          svg-icon(v-for="n in +scope.row.importance" icon-class="star" class="meta-item__icon" :key="n")
-
-      el-table-column(class-name="status-col" label="Status" width="110")
-        template(slot-scope="scope")
-          el-tag(:type="scope.row.status | statusFilter") {{scope.row.status}}
-
-      el-table-column(min-width="300px" label="Title")
+      el-table-column(align="center" label="Name" width="250px")
         template(slot-scope="scope")
           template(v-if="scope.row.edit")
-            el-input.edit-input(size="small" v-model="scope.row.title")
-            el-button.cancel-btn(size="small" icon="el-icon-refresh" type="warning" @click="cancelEdit(scope.row)") cancel
-          span(v-else) {{scope.row.title}}
-
-      el-table-column(align="center" label="Actions" width="120")
+            el-input.edit-input(size="small" v-model="scope.row.name")
+          span(v-else) {{scope.row.name}}
+      
+      el-table-column(align="center" label="Endpoint")
         template(slot-scope="scope")
-          el-button(v-if="scope.row.edit" type="success" @click="confirmEdit(scope.row)" size="small" icon="el-icon-circle-check-outline") Ok
-          el-button(v-else type="primary" @click="scope.row.edit=!scope.row.edit" size="small" icon="el-icon-edit") Edit
+          template(v-if="scope.row.edit")
+            el-input.edit-input(size="small" v-model="scope.row.url")
+          span(v-else) {{scope.row.url}}
 
+      el-table-column(align="center" label="Actions" width="180")
+        template(slot-scope="scope")
+          el-button.cancel-btn(v-if="scope.row.edit" size="small" icon="el-icon-refresh" type="warning" @click="cancelEdit(scope.row)" circle)
+          el-button(v-if="scope.row.edit" type="success" @click="confirmEdit(scope.row)" size="small" icon="el-icon-circle-check-outline" circle)
+          el-button(v-if="scope.row.edit" size="small" icon="el-icon-delete" type="danger" @click="confirmDelete(scope.row)" circle)
+          el-button(v-else type="primary" @click="scope.row.edit=!scope.row.edit" size="small" icon="el-icon-edit" circle)
 </template>
 
 <script>
-import { fetchList } from '@/api/kafka-connect'
+// import { fetchList } from '@/api/kafka-connect'
+import { getClusters } from '@/utils/cluster'
+import { validateURL } from '@/utils/validate'
 
 export default {
   name: 'clusterList',
   data() {
+    const validateRequire = (rule, value, callback) => {
+      if (value === '') {
+        let errMsg = rule.field + ' is required'
+        // this.$message({
+        //   message: errMsg,
+        //   type: 'error'
+        // })
+        callback(errMsg)
+      } else {
+        callback()
+      }
+    }
+    const validateRestUris = (rule, value, callback) => {
+      if (value) {
+        let errors = value.split(',').map(url => url.trim())
+          .filter(url => {
+            console.log(url)
+            return !validateURL(url)
+          })
+
+        if (errors.length === 0) {
+          callback()
+        } else {
+          let errMsgs = 'Invalid URL format. ' + errors.join()
+          // this.$message({
+          //   message: errMsgs,
+          //   type: 'error'
+          // })
+          callback(errMsgs)
+        }
+      } else {
+        callback()
+      }
+    }
     return {
       list: null,
       total: 0,
       listLoading: true,
+      dialogVisible: false,
       listQuery: {
         page: 1,
         limit: 10
+      },
+      form: {
+        name: '',
+        url: ''
+      },
+      rules: {
+        name: [{ validator: validateRequire }],
+        url: [{ validator: validateRequire }, { validator: validateRestUris, trigger: 'blur' }]
       }
     }
   },
@@ -67,31 +107,96 @@ export default {
   methods: {
     getList() {
       this.listLoading = true
-      fetchList('https://cp1.demo.playground.landoop.com/api/kafka-connect/', this.listQuery).then(response => {
-        console.log(response.data)
-        // const items = response.data.items
-        // this.list = items.map(v => {
-        //   this.$set(v, 'edit', false) // https://vuejs.org/v2/guide/reactivity.html
-        //   v.originalTitle = v.title //  will be used when user click the cancel botton
-        //   return v
-        // })
-        this.listLoading = false
+      this.list = getClusters().map(v => {
+        this.$set(v, 'edit', false)
+        v.originalName = v.name
+        v.originalUrl = v.url
+        return v
       })
+
+      this.listLoading = false
     },
     cancelEdit(row) {
-      row.title = row.originalTitle
+      row.url = row.originalUrl
+      row.name = row.originalName
       row.edit = false
       this.$message({
-        message: 'The title has been restored to the original value',
+        message: 'The data has been restored',
         type: 'warning'
       })
     },
     confirmEdit(row) {
-      row.edit = false
-      row.originalTitle = row.title
-      this.$message({
-        message: 'The title has been edited',
-        type: 'success'
+      this.$store.dispatch('addCluster', { url: row.url, name: row.name })
+        .then(() => {
+          row.edit = false
+          row.originalUrl = row.url
+          row.originalName = row.name
+          this.$message({
+            message: 'The data has been edited',
+            type: 'success'
+          })
+        })
+        .catch((err) => {
+          row.edit = false
+          this.url = row.originalUrl
+          this.name = row.originalName
+          this.$message({
+            message: 'Failed updating data. ' + err.message,
+            type: 'error'
+          })
+        })
+    },
+    confirmDelete(row) {
+      this.$confirm(`This will permanently delete \`${row.name}\`. Continue?`, 'Danger', {
+        type: 'error'
+      })
+        .then(_ => {
+          this.$store.dispatch('removeCluster', { url: row.url })
+            .then(() => {
+              row.edit = false
+              this.getList()
+              this.$message({
+                message: 'The data has been removed',
+                type: 'success'
+              })
+            })
+            .catch((err) => {
+              row.edit = false
+              this.$message({
+                message: 'Failed removing data. ' + err.message,
+                type: 'error'
+              })
+            })
+        })
+        .catch(_ => { console.log(' canceled ') })
+    },
+    addCluster() {
+      this.$refs.form.validate(valid => {
+        if (valid) {
+          this.loading = true
+          this.$store.dispatch('addCluster', { name: this.form.name, url: this.form.url })
+            .then(() => {
+              this.loading = false
+              this.getList()
+              this.$notify({
+                title: 'Successed',
+                message: 'Cluster added successfully!',
+                type: 'success',
+                duration: 2000
+              })
+            })
+            .catch((err) => {
+              this.loading = false
+              this.$message({
+                message: 'Failed adding new cluster. ' + err.message,
+                type: 'error'
+              })
+              return false
+            })
+        } else {
+          this.loading = false
+          return false
+        }
       })
     }
   }
@@ -103,7 +208,7 @@ export default {
   padding-right: 100px;
 }
 .cancel-btn {
-  position: absolute;
+  /* position: absolute; */
   right: 15px;
   top: 10px;
 }
