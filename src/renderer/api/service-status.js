@@ -1,5 +1,5 @@
-import timeoutPromise from './timeout-promise'
-import xrequest from './xrequest'
+import timeoutPromise from '@/utils/timeout-promise'
+import xrequest from '@/utils/xrequest'
 
 export function serviceStatus(base_urls, ms) {
   let url = base_urls.split(',')[0]

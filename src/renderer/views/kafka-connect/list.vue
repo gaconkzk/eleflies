@@ -42,7 +42,7 @@
 // import { fetchList } from '@/api/kafka-connect'
 import { getClusters } from '@/utils/cluster'
 import { validateURL } from '@/utils/validate'
-import { serviceStatus } from '@/utils/service-status'
+import { serviceStatus } from '@/api/service-status'
 
 export default {
   name: 'clusterList',
