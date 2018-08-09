@@ -1,5 +1,6 @@
 <template lang="pug">
   .createPost-container
+    p hehehe {{$route.params.name}}
     el-form.form-container(:model="postForm" :rules="rules" ref="postForm")
       sticky(:className="'sub-navbar draft'")
         el-button(v-loading="loading" style="margin-left: 10px;" type="success" @click="submitForm") Create

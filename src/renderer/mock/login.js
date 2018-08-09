@@ -12,7 +12,7 @@ const userMap = {
     roles: ['editor'],
     token: 'editor',
     introduction: 'Who edit who who who!!!',
-    avatar: 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',
+    avatar: 'static/imgs/avatar-kickpush.gif',
     name: 'Normal Editor'
   }
 }

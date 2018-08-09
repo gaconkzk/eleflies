@@ -4,19 +4,21 @@ import store from '../store'
 
 const xservice = axios.create({
 //   baseURL: process.env.BASE_API,
-  timeout: 15000
+  timeout: 15000,
+  crossdomain: true
 })
 
-// xservice.interceptors.request.use(config => {
-// //   if (store.getters.token) {
-// //     config.headers['X-Token'] = store.getters.token
-// //   }
-//   return config
-// }, error => {
-//   // Do something with request error
-//   console.log(error) // for debug
-//   Promise.reject(error)
-// })
+xservice.interceptors.request.use(config => {
+//   if (store.getters.token) {
+//     config.headers['X-Token'] = store.getters.token
+//   }
+  config.headers['Content-Type'] = 'application/json'
+  return config
+}, error => {
+  // Do something with request error
+  console.log(error) // for debug
+  Promise.reject(error)
+})
 
 xservice.interceptors.response.use(
   response => response,

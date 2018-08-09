@@ -14,13 +14,21 @@
         template(slot-scope="scope")
           template(v-if="scope.row.edit")
             el-input.edit-input(size="small" v-model="scope.row.name")
-          span(v-else) {{scope.row.name}}
+          span(v-else) 
+            router-link(:to="'/kafka-connect/cluster/'+scope.row.name.toLowerCase()") {{scope.row.name}}
       
       el-table-column(align="center" label="Endpoint")
         template(slot-scope="scope")
           template(v-if="scope.row.edit")
             el-input.edit-input(size="small" v-model="scope.row.url")
           span(v-else) {{scope.row.url}}
+      
+      el-table-column(align="center" label="Status")
+        template(slot-scope="scope")
+          div(v-if="scope.row.status!='N/A'")
+            .title {{scope.row.status.version}}
+            .sub-title {{scope.row.status.commit}}
+          span(v-else) wait
 
       el-table-column(align="center" label="Actions" width="180")
         template(slot-scope="scope")
@@ -34,6 +42,7 @@
 // import { fetchList } from '@/api/kafka-connect'
 import { getClusters } from '@/utils/cluster'
 import { validateURL } from '@/utils/validate'
+import { serviceStatus } from '@/utils/service-status'
 
 export default {
   name: 'clusterList',
@@ -77,6 +86,7 @@ export default {
       total: 0,
       listLoading: true,
       dialogVisible: false,
+      currentTimeouts: {},
       listQuery: {
         page: 1,
         limit: 10
@@ -111,10 +121,23 @@ export default {
         this.$set(v, 'edit', false)
         v.originalName = v.name
         v.originalUrl = v.url
+
+        // TODO update this
+        this.$set(v, 'status', 'N/A')
+
+        this.updateStatus(v.url).then((res) => {
+          this.$set(v, 'status', res.data)
+        }).catch(() => {
+          this.$set(v, 'status', 'ERROR')
+        })
+
         return v
       })
 
       this.listLoading = false
+    },
+    updateStatus(urls) {
+      return serviceStatus(urls, 2000)
     },
     cancelEdit(row) {
       row.url = row.originalUrl
