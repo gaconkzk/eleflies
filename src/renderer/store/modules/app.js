@@ -42,7 +42,7 @@ const app = {
     toggleDevice ({commit}, device) {
       commit('TOGGLE_DEVICE', device)
     },
-    setLanguage({ commit }, language) {
+    setLanguage({commit}, language) {
       commit('SET_LANGUAGE', language)
     }
   }

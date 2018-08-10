@@ -1,4 +1,4 @@
-import timeoutPromise from '@/utils/timeout-promise'
+import { timeoutPromise } from '@/utils/timeout-promise'
 import xrequest from '@/utils/xrequest'
 
 export function serviceStatus(base_urls, ms) {

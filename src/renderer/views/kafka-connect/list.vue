@@ -23,12 +23,10 @@
             el-input.edit-input(size="small" v-model="scope.row.url")
           span(v-else) {{scope.row.url}}
       
-      el-table-column(align="center" label="Status")
+      el-table-column(align="center" label="Version")
         template(slot-scope="scope")
-          div(v-if="scope.row.status!='N/A'")
-            .title {{scope.row.status.version}}
-            .sub-title {{scope.row.status.commit}}
-          span(v-else) wait
+          div(v-loading="scope.row.version==='N/A'" element-loading-spinner="el-icon-loading")
+            el-tag(:type="ctype(scope.row.version)") {{scope.row.version}}
 
       el-table-column(align="center" label="Actions" width="180")
         template(slot-scope="scope")
@@ -50,10 +48,6 @@ export default {
     const validateRequire = (rule, value, callback) => {
       if (value === '') {
         let errMsg = rule.field + ' is required'
-        // this.$message({
-        //   message: errMsg,
-        //   type: 'error'
-        // })
         callback(errMsg)
       } else {
         callback()
@@ -63,7 +57,6 @@ export default {
       if (value) {
         let errors = value.split(',').map(url => url.trim())
           .filter(url => {
-            console.log(url)
             return !validateURL(url)
           })
 
@@ -113,31 +106,51 @@ export default {
   },
   created() {
     this.getList()
+    this.currentTimeouts = setInterval(this.updateStatus, 15000)
+  },
+  destroyed() {
+    clearInterval(this.currentTimeouts)
   },
   methods: {
+    ctype(version) {
+      switch (version) {
+        case 'N/A':
+          return 'info'
+        case 'Error':
+          return 'danger'
+        default:
+          return 'success'
+      }
+    },
     getList() {
       this.listLoading = true
+
       this.list = getClusters().map(v => {
         this.$set(v, 'edit', false)
         v.originalName = v.name
         v.originalUrl = v.url
 
         // TODO update this
-        this.$set(v, 'status', 'N/A')
-
-        this.updateStatus(v.url).then((res) => {
-          this.$set(v, 'status', res.data)
-        }).catch(() => {
-          this.$set(v, 'status', 'ERROR')
-        })
+        this.$set(v, 'version', 'N/A')
 
         return v
       })
 
       this.listLoading = false
     },
-    updateStatus(urls) {
-      return serviceStatus(urls, 2000)
+    updateStatus() {
+      // working
+      let data = (this.list || [])
+      let bclass = this
+
+      data.forEach(it => serviceStatus(it.url, 2000)
+        .then((v) => {
+          // console.log(v)
+          bclass.$set(it, 'version', v.version)
+        }).catch(() => {
+          bclass.$set(it, 'version', 'Error')
+        })
+      )
     },
     cancelEdit(row) {
       row.url = row.originalUrl

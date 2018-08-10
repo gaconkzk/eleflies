@@ -2,28 +2,29 @@ import Cookies from 'js-cookie'
 
 const kafka_connect = {
   state: {
-    clusters: Cookies.get('clusters')
+    clusters: JSON.parse(Cookies.get('clusters') || '[]')
   },
   mutations: {
     ADD_CLUSTER: (state, cluster) => {
-      if (!state.clusters) {
-        state.clusters = []
-      }
-      state.clusters.push(cluster)
-      Cookies.set('clusters', state.clusters)
+      let clusters = JSON.parse(Cookies.get('clusters') || '[]')
+      clusters.push(cluster)
+
+      state.clusters = clusters
+      Cookies.set('clusters', clusters)
     },
     REMOVE_CLUSTER: (state, cluster) => {
-      if (!state.clusters) {
+      let clusters = JSON.parse(Cookies.get('clusters') || '[]')
+      if (!clusters.length) {
         return
       }
+      clusters = clusters.filter(c => c.url !== cluster.url && c.name !== cluster.name)
 
-      state.clusters = state.clusters.filter(c => c.url !== cluster.url)
-
-      if (state.clusters.length) {
-        Cookies.set('clusters', state.clusters)
+      if (clusters.length) {
+        Cookies.set('clusters', clusters)
       } else {
         Cookies.remove('clusters')
       }
+      state.clusters = clusters
     }
   },
   actions: {
