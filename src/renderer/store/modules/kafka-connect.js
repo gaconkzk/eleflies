@@ -17,8 +17,8 @@ const kafka_connect = {
       if (!clusters.length) {
         return
       }
-      clusters = clusters.filter(c => c.url !== cluster.url && c.name !== cluster.name)
 
+      clusters = clusters.filter(c => c.url !== cluster.url && c.name !== cluster.name)
       if (clusters.length) {
         Cookies.set('clusters', clusters)
       } else {

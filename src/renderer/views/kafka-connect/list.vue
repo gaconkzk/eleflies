@@ -64,10 +64,6 @@ export default {
           callback()
         } else {
           let errMsgs = 'Invalid URL format. ' + errors.join()
-          // this.$message({
-          //   message: errMsgs,
-          //   type: 'error'
-          // })
           callback(errMsgs)
         }
       } else {
@@ -208,7 +204,9 @@ export default {
     },
     addCluster() {
       this.$refs.form.validate(valid => {
-        if (valid) {
+        let existed = getClusters().filter(it => it.url === this.form.url)
+        console.log(existed)
+        if (valid && !existed.length) {
           this.loading = true
           this.$store.dispatch('addCluster', { name: this.form.name, url: this.form.url })
             .then(() => {
@@ -231,6 +229,10 @@ export default {
             })
         } else {
           this.loading = false
+          this.$message({
+            message: 'Cluster url already existed.',
+            type: 'error'
+          })
           return false
         }
       })
