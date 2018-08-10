@@ -18,9 +18,10 @@ import '@/mock' // simulation data
 
 import * as filters from '@/filters' // global filters
 
-if (!process.env.IS_WEB) Vue.use(require('vue-electron'))
-
-require('electron-cookies')
+if (!process.env.IS_WEB) {
+  Vue.use(require('vue-electron'))
+  require('electron-cookies')
+}
 
 Vue.use(ElementUI, {
   size: 'medium', // set element-ui default size
