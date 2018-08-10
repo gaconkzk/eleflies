@@ -1,11 +1,11 @@
 Arguments: 
-  D:\Software\Development\nodejs\node.exe D:\Software\Development\yarn\bin\yarn.js add echarts
+  D:\Software\Development\nodejs\node.exe D:\Software\Development\yarn\bin\yarn.js
 
 PATH: 
-  C:\Users\tntvu\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\local\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Users\tntvu\bin;D:\Software\Development\anaconda3;D:\Software\Development\anaconda3\Library\mingw-w64\bin;D:\Software\Development\anaconda3\Library\usr\bin;D:\Software\Development\anaconda3\Library\bin;D:\Software\Development\anaconda3\Scripts;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\ProgramData\Oracle\Java\javapath;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0;C:\Program_Files\Java\jdk1.8.0_144\bin;C:\Program Files\Heroku\bin;C:\Program Files\Git\cmd;C:\Users\tntvu\.IdeaIC2018.2\config\plugins\Kotlin\kotlinc\bin;D:\Software\Development\kotlin-native-0.3.2\bin;C:\Program Files (x86)\Skype\Phone;D:\Software\Development\emsdk;C:\Program Files\CMake\bin;D:\Vagrant\bin;C:\Python27;C:\Python27\Scripts;D:\Software\Tools\ripgrep;D:\msys64\mingw64\bin;D:\msys64\usr\bin;D:\Software\Development\nodejs;C:\Program Files\TortoiseSVN\bin;D:\Software\Development\spark-1.6.0-bin-hadoop2.6\bin;C:\Users\tntvu\.cargo\bin;D:\Software\Development\yarn\bin;D:\Software\Development\nodejs;D:\Software\Tools\ngrok;C:\Users\tntvu\AppData\Local\Microsoft\WindowsApps;C:\Users\tntvu\AppData\Local\Yarn\bin;C:\Program Files\Microsoft VS Code\bin;C:\Program Files\Heroku\bin;D:\Software\Development\emsdk;D:\Software\Development\emsdk\python\2.7.5.3_64bit;D:\Software\Development\kotlin-native-windows-0.6\bin;C:\Program Files\Oracle\VirtualBox;D:\Software\Development\LLVM\bin;C:\Users\tntvu\AppData\Local\Yarn\bin;C:\Users\tntvu\AppData\Roaming\npm;C:\opencv\vc15\install\opencv\x64\vc15\bin;C:\Program Files\MIT\Kerberos\bin;D:\Software\Development\Golang\bin;D:\Software\Development\yarn\bin;D:\Software\Development\php-7.2.8;D:\software\development\phabricator\arcanist\bin;C:\Users\tntvu\.cargo\bin;D:\Software\Development\yarn\bin;D:\Software\Development\nodejs;D:\Software\Tools\ngrok;C:\Users\tntvu\AppData\Local\Microsoft\WindowsApps;C:\Users\tntvu\AppData\Local\Yarn\bin;C:\Program Files\Microsoft VS Code\bin;C:\Program Files\Heroku\bin;D:\Software\Development\emsdk;D:\Software\Development\emsdk\python\2.7.5.3_64bit;D:\Software\Development\kotlin-native-windows-0.6\bin;C:\Program Files\Oracle\VirtualBox;D:\Software\Development\LLVM\bin;C:\Users\tntvu\AppData\Roaming\npm;C:\Program Files\Docker Toolbox;D:\Repositories\golang\bin;C:\Users\tntvu\AppData\Local\Yarn\bin;C:\Program Files\Git\usr\bin\vendor_perl;C:\Program Files\Git\usr\bin\core_perl
+  C:\Users\tntvu\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\local\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Users\tntvu\bin;D:\Software\Development\anaconda3;D:\Software\Development\anaconda3\Library\mingw-w64\bin;D:\Software\Development\anaconda3\Library\usr\bin;D:\Software\Development\anaconda3\Library\bin;D:\Software\Development\anaconda3\Scripts;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\ProgramData\Oracle\Java\javapath;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0;C:\Program_Files\Java\jdk1.8.0_144\bin;C:\Program Files\Heroku\bin;C:\Program Files\Git\cmd;C:\Users\tntvu\.IdeaIC2018.2\config\plugins\Kotlin\kotlinc\bin;D:\Software\Development\kotlin-native-0.3.2\bin;D:\Software\Development\emsdk;C:\Program Files\CMake\bin;D:\Vagrant\bin;C:\Python27;C:\Python27\Scripts;D:\Software\Tools\ripgrep;D:\msys64\mingw64\bin;D:\msys64\usr\bin;C:\Program Files\TortoiseSVN\bin;D:\Software\Development\spark-1.6.0-bin-hadoop2.6\bin;C:\Users\tntvu\.cargo\bin;D:\Software\Development\yarn\bin;D:\Software\Development\nodejs;D:\Software\Tools\ngrok;C:\Users\tntvu\AppData\Local\Microsoft\WindowsApps;C:\Users\tntvu\AppData\Local\Yarn\bin;C:\Program Files\Microsoft VS Code\bin;C:\Program Files\Heroku\bin;D:\Software\Development\emsdk;D:\Software\Development\emsdk\python\2.7.5.3_64bit;D:\Software\Development\kotlin-native-windows-0.6\bin;C:\Program Files\Oracle\VirtualBox;D:\Software\Development\LLVM\bin;C:\Users\tntvu\AppData\Local\Yarn\bin;C:\Users\tntvu\AppData\Roaming\npm;C:\opencv\vc15\install\opencv\x64\vc15\bin;D:\Software\Development\Golang\bin;D:\Software\Development\php-7.2.8;D:\software\development\phabricator\arcanist\bin;D:\Software\Development\nodejs;D:\Software\Development\yarn\bin;C:\Program Files\Docker Toolbox;D:\Repositories\golang\bin;C:\Program Files\Git\usr\bin\vendor_perl;C:\Program Files\Git\usr\bin\core_perl
 
 Yarn version: 
-  1.9.2
+  1.9.4
 
 Node version: 
   10.8.0
@@ -14,15 +14,15 @@ Platform:
   win32 x64
 
 Trace: 
-  Error: EBUSY: resource busy or locked, unlink 'D:\Repositories\eleflies\node_modules\electron\dist\blink_image_resources_200_percent.pak'
+  Error: ENOENT: no such file or directory, open 'C:\Users\tntvu\AppData\Local\Yarn\Cache\v2\npm-electron-cookies-2.0.0-0fe47ece15554982fa5a2151de52ddffbfac64fe\.yarn-metadata.json'
 
 npm manifest: 
   {
     "name": "eleflies",
-    "version": "0.0.0",
+    "version": "0.0.5",
     "author": "To Nguyen Thanh Vu <tntvu@TMA.COM.VN>",
     "description": "Dashboard",
-    "license": null,
+    "private": true,
     "main": "./dist/electron/main.js",
     "scripts": {
       "build": "node .electron-vue/build.js && electron-builder",
@@ -72,12 +72,17 @@ npm manifest:
       }
     },
     "dependencies": {
-      "axios": "^0.16.1",
+      "axios": "^0.18.0",
+      "echarts": "^4.1.0",
+      "electron-cookies": "git+ssh://git@github.com:heap/electron-cookies.git#master",
       "element-ui": "^2.4.5",
       "js-cookie": "^2.2.0",
+      "mockjs": "^1.0.1-beta3",
       "normalize.css": "^8.0.0",
       "nprogress": "^0.2.0",
+      "screenfull": "^3.3.2",
       "vue": "^2.3.3",
+      "vue-count-to": "^1.0.13",
       "vue-electron": "^1.0.6",
       "vue-i18n": "^8.0.0",
       "vue-router": "^3.0.1",
@@ -121,6 +126,7 @@ npm manifest:
       "pug": "^2.0.3",
       "pug-plain-loader": "^1.0.0",
       "sass-loader": "^7.1.0",
+      "shelljs": "^0.8.2",
       "style-loader": "^0.18.2",
       "svg-sprite-loader": "^3.8.0",
       "url-loader": "^0.5.9",
@@ -131,6 +137,10 @@ npm manifest:
       "webpack": "^3.5.2",
       "webpack-dev-server": "^2.7.1",
       "webpack-hot-middleware": "^2.18.2"
+    },
+    "engines": {
+      "node": ">= 8.0.0",
+      "npm": ">= 4.0.0"
     }
   }
 
@@ -487,11 +497,11 @@ Lockfile:
     version "1.7.0"
     resolved "https://registry.yarnpkg.com/aws4/-/aws4-1.7.0.tgz#d4d0e9b9dbfca77bf08eeb0a8a471550fe39e289"
   
-  axios@^0.16.1:
-    version "0.16.2"
-    resolved "https://registry.yarnpkg.com/axios/-/axios-0.16.2.tgz#ba4f92f17167dfbab40983785454b9ac149c3c6d"
+  axios@^0.18.0:
+    version "0.18.0"
+    resolved "https://registry.yarnpkg.com/axios/-/axios-0.18.0.tgz#32d53e4851efdc0a11993b6cd000789d70c05102"
     dependencies:
-      follow-redirects "^1.2.3"
+      follow-redirects "^1.3.0"
       is-buffer "^1.1.5"
   
   babel-code-frame@^6.22.0, babel-code-frame@^6.26.0:
@@ -2002,7 +2012,7 @@ Lockfile:
     dependencies:
       delayed-stream "~1.0.0"
   
-  commander@2.16.x, commander@^2.15.1, commander@~2.16.0:
+  commander@*, commander@2.16.x, commander@^2.15.1, commander@~2.16.0:
     version "2.16.0"
     resolved "https://registry.yarnpkg.com/commander/-/commander-2.16.0.tgz#f16390593996ceb4f3eeb020b31d78528f7f8a50"
   
@@ -2705,6 +2715,12 @@ Lockfile:
       jsbn "~0.1.0"
       safer-buffer "^2.1.0"
   
+  echarts@^4.1.0:
+    version "4.1.0"
+    resolved "https://registry.yarnpkg.com/echarts/-/echarts-4.1.0.tgz#d588c95f73c1a9928b9c73d5b769751c3185bcdc"
+    dependencies:
+      zrender "4.0.4"
+  
   ee-first@1.1.1:
     version "1.1.1"
     resolved "https://registry.yarnpkg.com/ee-first/-/ee-first-1.1.1.tgz#590c61156b0ae2f4f0255732a158b266bc56b21d"
@@ -2760,6 +2776,13 @@ Lockfile:
       sanitize-filename "^1.6.1"
       update-notifier "^2.3.0"
       yargs "^11.0.0"
+  
+  "electron-cookies@git+ssh://git@github.com:heap/electron-cookies.git#master":
+    version "2.0.0"
+    resolved "git+ssh://git@github.com:heap/electron-cookies.git#7ae1025f9b3b46745041108f4c527f678afc9502"
+    dependencies:
+      tough-cookie "^2.3.4"
+      tough-cookie-web-storage-store "^1.0.0"
   
   electron-debug@^1.4.0:
     version "1.5.0"
@@ -3516,7 +3539,7 @@ Lockfile:
       inherits "^2.0.1"
       readable-stream "^2.0.4"
   
-  follow-redirects@^1.0.0, follow-redirects@^1.2.3:
+  follow-redirects@^1.0.0, follow-redirects@^1.3.0:
     version "1.5.2"
     resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.5.2.tgz#5a9d80e0165957e5ef0c1210678fc5c4acb9fb03"
     dependencies:
@@ -4969,7 +4992,7 @@ Lockfile:
     version "4.5.0"
     resolved "https://registry.yarnpkg.com/lodash.uniq/-/lodash.uniq-4.5.0.tgz#d0225373aeb652adc1bc82e4945339a842754773"
   
-  lodash@^4.0.0, lodash@^4.17.10, lodash@^4.17.2, lodash@^4.17.3, lodash@^4.17.4, lodash@^4.3.0, lodash@~4.17.10:
+  lodash@^4.0.0, lodash@^4.17.10, lodash@^4.17.2, lodash@^4.17.3, lodash@^4.17.4, lodash@^4.3.0, lodash@^4.6.1, lodash@~4.17.10:
     version "4.17.10"
     resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.10.tgz#1b7793cf7259ea38fb3661d4d38b3260af8ae4e7"
   
@@ -5267,6 +5290,12 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/mkdirp/-/mkdirp-0.5.1.tgz#30057438eac6cf7f8c4767f38648d6697d75c903"
     dependencies:
       minimist "0.0.8"
+  
+  mockjs@^1.0.1-beta3:
+    version "1.0.1-beta3"
+    resolved "https://registry.yarnpkg.com/mockjs/-/mockjs-1.0.1-beta3.tgz#d234f3c27256397564f2c955142e891909537209"
+    dependencies:
+      commander "*"
   
   move-concurrently@^1.0.1:
     version "1.0.1"
@@ -6321,6 +6350,10 @@ Lockfile:
     version "1.0.2"
     resolved "https://registry.yarnpkg.com/pseudomap/-/pseudomap-1.0.2.tgz#f052a28da70e618917ef0a8ac34c1ae5a68286b3"
   
+  psl@^1.1.24:
+    version "1.1.29"
+    resolved "https://registry.yarnpkg.com/psl/-/psl-1.1.29.tgz#60f580d360170bb722a797cc704411e6da850c67"
+  
   public-encrypt@^4.0.0:
     version "4.0.2"
     resolved "https://registry.yarnpkg.com/public-encrypt/-/public-encrypt-4.0.2.tgz#46eb9107206bf73489f8b85b69d91334c6610994"
@@ -6626,6 +6659,12 @@ Lockfile:
       esprima "~3.1.0"
       private "~0.1.5"
       source-map "~0.5.0"
+  
+  rechoir@^0.6.2:
+    version "0.6.2"
+    resolved "https://registry.yarnpkg.com/rechoir/-/rechoir-0.6.2.tgz#85204b54dba82d5742e28c96756ef43af50e3384"
+    dependencies:
+      resolve "^1.1.6"
   
   redent@^1.0.0:
     version "1.0.0"
@@ -6968,6 +7007,10 @@ Lockfile:
     dependencies:
       ajv "^5.0.0"
   
+  screenfull@^3.3.2:
+    version "3.3.2"
+    resolved "https://registry.yarnpkg.com/screenfull/-/screenfull-3.3.2.tgz#a6adf3b3f5556da812725385880600f5b39fbf25"
+  
   scss-tokenizer@^0.2.3:
     version "0.2.3"
     resolved "https://registry.yarnpkg.com/scss-tokenizer/-/scss-tokenizer-0.2.3.tgz#8eb06db9a9723333824d3f5530641149847ce5d1"
@@ -7111,6 +7154,14 @@ Lockfile:
   shebang-regex@^1.0.0:
     version "1.0.0"
     resolved "https://registry.yarnpkg.com/shebang-regex/-/shebang-regex-1.0.0.tgz#da42f49740c0b42db2ca9728571cb190c98efea3"
+  
+  shelljs@^0.8.2:
+    version "0.8.2"
+    resolved "https://registry.yarnpkg.com/shelljs/-/shelljs-0.8.2.tgz#345b7df7763f4c2340d584abb532c5f752ca9e35"
+    dependencies:
+      glob "^7.0.0"
+      interpret "^1.0.0"
+      rechoir "^0.6.2"
   
   signal-exit@^3.0.0, signal-exit@^3.0.2:
     version "3.0.2"
@@ -7691,6 +7742,19 @@ Lockfile:
     version "1.0.7"
     resolved "https://registry.yarnpkg.com/toposort/-/toposort-1.0.7.tgz#2e68442d9f64ec720b8cc89e6443ac6caa950029"
   
+  tough-cookie-web-storage-store@^1.0.0:
+    version "1.0.0"
+    resolved "https://registry.yarnpkg.com/tough-cookie-web-storage-store/-/tough-cookie-web-storage-store-1.0.0.tgz#8021fce24290bf0b6151e491d7312343451d390d"
+    dependencies:
+      lodash "^4.6.1"
+  
+  tough-cookie@^2.3.4:
+    version "2.4.3"
+    resolved "https://registry.yarnpkg.com/tough-cookie/-/tough-cookie-2.4.3.tgz#53f36da3f47783b0925afa06ff9f3b165280f781"
+    dependencies:
+      psl "^1.1.24"
+      punycode "^1.4.1"
+  
   tough-cookie@~2.3.0, tough-cookie@~2.3.3:
     version "2.3.4"
     resolved "https://registry.yarnpkg.com/tough-cookie/-/tough-cookie-2.3.4.tgz#ec60cee38ac675063ffc97a5c18970578ee83655"
@@ -7991,6 +8055,10 @@ Lockfile:
   void-elements@^2.0.1:
     version "2.0.1"
     resolved "https://registry.yarnpkg.com/void-elements/-/void-elements-2.0.1.tgz#c066afb582bb1cb4128d60ea92392e94d5e9dbec"
+  
+  vue-count-to@^1.0.13:
+    version "1.0.13"
+    resolved "https://registry.yarnpkg.com/vue-count-to/-/vue-count-to-1.0.13.tgz#3e7573ea6e64c2b2972f64e0a2ab2e23c7590ff3"
   
   vue-electron@^1.0.6:
     version "1.0.6"
@@ -8404,3 +8472,7 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/yauzl/-/yauzl-2.4.1.tgz#9528f442dab1b2284e58b4379bb194e22e0c4005"
     dependencies:
       fd-slicer "~1.0.1"
+  
+  zrender@4.0.4:
+    version "4.0.4"
+    resolved "https://registry.yarnpkg.com/zrender/-/zrender-4.0.4.tgz#910e60d888f00c9599073f23758dd23345fe48fd"
