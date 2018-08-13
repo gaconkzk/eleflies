@@ -4,15 +4,12 @@
     el-row(:gutter=8)
       el-col(:xs="24" :sm="24" :lg="12")
         el-card
-          .clearfix(slot="header" style="background-color: black")
+          .clearfix(slot="header")
             span {{totals}} connectors
             el-button(style="float:right; padding: 3px 0" type="text") NEW
-          .text.item Search
-          .text.item connector 1
-        p connectors || add new
-          | <br/>
-          | search: <br/>
-          | list first 10 connectors
+          .item
+            el-input(placeholder="Search" suffix-icon="el-icon-search" v-model="searchInput"
+                     :fetch-suggestions="querySearch" @select="handleSelect")
       el-col(:xs="24" :sm="24" :lg="12")
         p connectors dashboard
           | <br/>
@@ -77,9 +74,22 @@ export default {
       totals: 7,
       postForm: Object.assign({}, defaultForm),
       loading: false,
+      searchInput: '',
       rules: {
         rest_url: [{ validator: validatorRestUris, trigger: 'blur' }]
-      }
+      },
+      connectors: [
+        {
+          name: 'bda-sink-config'
+        },
+        {
+          name: 'bda-stats-sink'
+        },
+        {
+          name: 'rt-alarm-sink'
+        }
+      ],
+      timeout: null
     }
   },
   methods: {
@@ -117,6 +127,19 @@ export default {
         duration: 1000
       })
       this.postForm.rest_url = 'localhost:8084'
+    },
+    querySearch(queryString, cb) {
+      let connectors = this.connectors
+
+      let results = queryString ? connectors.filter(con => con.name.toLowerCase().includes(queryString.toLowerCase())) : connectors
+
+      this.timeout || clearTimeout(this.timeout)
+      this.timeout = setTimeout(() => {
+        cb(results)
+      }, 3000 * Math.random())
+    },
+    handleSelect(item) {
+      console.log(item)
     }
   }
 }
