@@ -64,7 +64,8 @@ export default {
     createCluster: 'Create Cluster',
     editCluster: 'Edit Cluster',
     clusterList: 'Clusters',
-    'kafka-connect': 'Kafka Connect'
+    'kafka-connect': 'Kafka Connect',
+    clusterDetail: 'Cluster'
   },
   navbar: {
     logOut: 'Log Out',

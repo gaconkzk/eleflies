@@ -14,6 +14,7 @@ import i18n from '@/lang'
 import '@/icons' // icon
 import '@/errorLog'// error log
 import '@/permission' // permission control
+
 import '@/mock' // simulation data
 
 import * as filters from '@/filters' // global filters

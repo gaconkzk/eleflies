@@ -1,7 +1,27 @@
 <template lang="pug">
-  .createPost-container
-    p hehehe {{$route.params.name}}
-    el-form.form-container(:model="postForm" :rules="rules" ref="postForm")
+  .dashboard-container
+    github-corner(style="position: absolute; top: 0px; border: 0; right: 0;")
+    el-row(:gutter=8)
+      el-col(:xs="24" :sm="24" :lg="12")
+        el-card
+          .clearfix(slot="header" style="background-color: black")
+            span {{totals}} connectors
+            el-button(style="float:right; padding: 3px 0" type="text") NEW
+          .text.item Search
+          .text.item connector 1
+        p connectors || add new
+          | <br/>
+          | search: <br/>
+          | list first 10 connectors
+      el-col(:xs="24" :sm="24" :lg="12")
+        p connectors dashboard
+          | <br/>
+          | total sinks<br/>
+          | total sources<br/>
+          | total topics<br/>
+          | connect topology<br/>
+    //- p hehehe {{$route.params.name}}
+    //- el-form.form-container(:model="postForm" :rules="rules" ref="postForm")
       sticky(:className="'sub-navbar draft'")
         el-button(v-loading="loading" style="margin-left: 10px;" type="success" @click="submitForm") Create
         el-button(v-loading="loading" type="warning" @click="draftForm") Clear
@@ -13,6 +33,7 @@
 </template>
 
 <script>
+import GithubCorner from '@/components/GithubCorner'
 import MDinput from '@/components/MDinput'
 import Sticky from '@/components/Sticky'
 import { validateURL } from '@/utils/validate'
@@ -23,7 +44,7 @@ const defaultForm = {
 
 export default {
   name: 'clusterDetail',
-  components: { MDinput, Sticky },
+  components: { GithubCorner, MDinput, Sticky },
   props: {
     isEdit: {
       type: Boolean,
@@ -53,6 +74,7 @@ export default {
       }
     }
     return {
+      totals: 7,
       postForm: Object.assign({}, defaultForm),
       loading: false,
       rules: {
@@ -100,38 +122,14 @@ export default {
 }
 </script>
 
-
-<style lang="scss" scoped>
-@import "~/scss/mixin.scss";
-.createPost-container {
-  position: relative;
-  .createPost-main-container {
-    padding: 40px 45px 20px 50px;
-    .postInfo-container {
-      position: relative;
-      @include clearfix;
-      margin-bottom: 10px;
-      .postInfo-container-item {
-        float: left;
-      }
-    }
-    .editor-container {
-      min-height: 500px;
-      margin: 0 0 30px;
-      .editor-upload-btn-container {
-        text-align: right;
-        margin-right: 10px;
-        .editor-upload-btn {
-          display: inline-block;
-        }
-      }
-    }
-  }
-  .word-counter {
-    width: 40px;
-    position: absolute;
-    right: -10px;
-    top: 0px;
+<style rel="stylesheet/scss" lang="scss" scoped>
+.dashboard-container {
+  padding: 32px;
+  background-color: rgb(240, 242, 245);
+  .chart-wrapper {
+    background: #fff;
+    padding: 16px 16px 0;
+    margin-bottom: 32px;
   }
 }
 </style>

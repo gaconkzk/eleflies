@@ -1,5 +1,5 @@
 <template lang="pug">
-  .dashboard-editor-container
+  .dashboard-container
     github-corner(style="position: absolute; top: 0px; border: 0; right: 0;")
 
     panel-group(@handleSetLineChartData="handleSetLineChartData")
@@ -90,7 +90,7 @@ export default {
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
-.dashboard-editor-container {
+.dashboard-container {
   padding: 32px;
   background-color: rgb(240, 242, 245);
   .chart-wrapper {

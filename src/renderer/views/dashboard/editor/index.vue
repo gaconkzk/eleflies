@@ -1,19 +1,14 @@
-<template>
-  <div class="dashboard-editor-container">
-    <div class=" clearfix">
-      <pan-thumb style="float: left" :image="avatar"> Your roles:
-        <span class="pan-info-roles" :key='item' v-for="item in roles">{{item}}</span>
-      </pan-thumb>
-      <github-corner style="position: absolute; top: 0px; border: 0; right: 0;"></github-corner>
-      <div class="info-container">
-        <span class="display_name">{{name}}</span>
-        <span style="font-size:20px;padding-top:20px;display:inline-block;">Editor's Dashboard</span>
-      </div>
-    </div>
-    <div>
-      <img class="emptyGif" :src="emptyGif">
-    </div>
-  </div>
+<template lang="pug">
+  .dashboard-editor-container
+    .clearfix
+      pan-thumb(style="float: left" :image="avatar") Your roles:
+        span.pan-info-roles(:key='item' v-for="item in roles") {{item}}
+      github-corner(style="position: absolute; top: 0px; border: 0; right: 0;")
+      .info-container
+        span.display_name {{name}}
+        span(style="font-size:20px;padding-top:20px;display:inline-block;") Editor's Dashboard
+    div
+      img.emptyGif(:src="emptyGif")
 </template>
 
 <script>
