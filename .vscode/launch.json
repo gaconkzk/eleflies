@@ -7,6 +7,9 @@
     {
       "type": "node",
       "request": "launch",
+      "env": {
+        "BABEL_ENV": "development"
+      },
       "name": "eleflies debug",
       "cwd": "${workspaceFolder}",
       "program": "${workspaceFolder}/.electron-vue/dev-runner.js",

@@ -8,8 +8,11 @@
             span {{totals}} connectors
             el-button(style="float:right; padding: 3px 0" type="text") NEW
           .item
-            el-input(placeholder="Search" suffix-icon="el-icon-search" v-model="searchInput"
-                     :fetch-suggestions="querySearch" @select="handleSelect")
+            el-autocomplete(placeholder="Search" suffix-icon="el-icon-search" v-model="searchInput"
+                     :fetch-suggestions="querySearch" @select="handleSelect" :trigger-on-focus="false")
+              template(slot-scope="{ item }")
+                .value {{ item.name }}
+                span.link {{ item.url }}
       el-col(:xs="24" :sm="24" :lg="12")
         p connectors dashboard
           | <br/>

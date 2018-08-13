@@ -12,6 +12,9 @@
     "renderer": {
       "presets": [
         ["env", {
+          "development": {
+            "plugins": ["dynamic-import-node"]
+          },
           "modules": false
         }],
         "stage-0"
@@ -20,11 +23,14 @@
     "web": {
       "presets": [
         ["env", {
+          "development": {
+            "plugins": ["dynamic-import-node"]
+          },
           "modules": false
         }],
         "stage-0"
       ]
     }
   },
-  "plugins": ["transform-runtime"]
+  "plugins": ["transform-vue-jsx", "transform-runtime"]
 }
