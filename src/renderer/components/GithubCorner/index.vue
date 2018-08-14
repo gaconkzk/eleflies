@@ -10,17 +10,19 @@
 </template>
 
 <script>
-import {shell} from 'electron'
-
 export default {
   methods: {
     openExternal(url) {
-      shell.openExternal(url)
+      if (!window) {
+        // TODO no electron in web mode
+        // require('electron').shell.openExternal(url)
+      } else {
+        window.open(url)
+      }
     }
   }
 }
 </script>
-
 
 <style scoped>
 .github-corner:hover .octo-arm {

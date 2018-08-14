@@ -41,6 +41,7 @@
 import { getClusters } from '@/utils/cluster'
 import { validateURL } from '@/utils/validate'
 import { serviceStatus } from '@/api/service-status'
+import { setTimeout, clearTimeout } from 'timers'
 
 export default {
   name: 'clusterList',
@@ -102,10 +103,15 @@ export default {
   },
   created() {
     this.getList()
-    this.currentTimeouts = setInterval(this.updateStatus, 15000)
+    this.updateStatus()
+
+    this.currentTimeouts = setTimeout(function tick(binder) {
+      binder.updateStatus()
+      binder.currentTimeouts = setTimeout(tick, 5000, binder)
+    }, 5000, this)
   },
   destroyed() {
-    clearInterval(this.currentTimeouts)
+    clearTimeout(this.currentTimeouts)
   },
   methods: {
     ctype(version) {

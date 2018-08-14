@@ -15,13 +15,13 @@ module.exports = {
     'html'
   ],
   // check if imports actually resolve
-  'settings': {
-    'import/resolver': {
-      'webpack': {
-        'config': 'build/webpack.base.conf.js'
-      }
-    }
-  },
+  // 'settings': {
+  //   'import/resolver': {
+  //     'webpack': {
+  //       'config': 'build/webpack.base.conf.js'
+  //     }
+  //   }
+  // },
   globals: {
     __static: true
   },
