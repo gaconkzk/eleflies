@@ -33,13 +33,13 @@ export const constantRouterMap = [
   {
     path: '',
     component: Layout,
-    redirect: 'dashboard',
-    children: [{
-      path: 'dashboard',
-      component: () => import('@/views/dashboard/index'),
-      name: 'dashboard',
-      meta: { title: 'dashboard', icon: 'dashboard', noCache: true }
-    }]
+    redirect: 'kafka-connect'
+    // children: [{
+    //   path: 'dashboard',
+    //   component: () => import('@/views/dashboard/index'),
+    //   name: 'dashboard',
+    //   meta: { title: 'dashboard', icon: 'dashboard', noCache: true }
+    // }]
   }
 ]
 
@@ -50,34 +50,34 @@ export default new Router({
 })
 
 export const asyncRouterMap = [
-  {
-    path: '/permission',
-    component: Layout,
-    redirect: '/permission/index',
-    alwaysShow: true, // will always show the root menu
-    meta: {
-      title: 'permission',
-      icon: 'lock',
-      roles: ['admin', 'editor'] // you can set roles in root nav
-    },
-    children: [{
-      path: 'page',
-      component: () => import('@/views/permission/page'),
-      name: 'pagePermission',
-      meta: {
-        title: 'pagePermission',
-        roles: ['admin'] // or you can only set roles in sub nav
-      }
-    }, {
-      path: 'directive',
-      component: () => import('@/views/permission/directive'),
-      name: 'directivePermission',
-      meta: {
-        title: 'directivePermission'
-        // if do not set roles, means: this page does not require permission
-      }
-    }]
-  },
+  // {
+  //   path: '/permission',
+  //   component: Layout,
+  //   redirect: '/permission/index',
+  //   alwaysShow: true, // will always show the root menu
+  //   meta: {
+  //     title: 'permission',
+  //     icon: 'lock',
+  //     roles: ['admin', 'editor'] // you can set roles in root nav
+  //   },
+  //   children: [{
+  //     path: 'page',
+  //     component: () => import('@/views/permission/page'),
+  //     name: 'pagePermission',
+  //     meta: {
+  //       title: 'pagePermission',
+  //       roles: ['admin'] // or you can only set roles in sub nav
+  //     }
+  //   }, {
+  //     path: 'directive',
+  //     component: () => import('@/views/permission/directive'),
+  //     name: 'directivePermission',
+  //     meta: {
+  //       title: 'directivePermission'
+  //       // if do not set roles, means: this page does not require permission
+  //     }
+  //   }]
+  // },
   {
     path: '/kafka-connect',
     component: Layout,
@@ -103,20 +103,20 @@ export const asyncRouterMap = [
       }
     ]
   },
-  {
-    path: '/error',
-    component: Layout,
-    redirect: 'noredirect',
-    name: 'errorPages',
-    meta: {
-      title: 'errorPages',
-      icon: '404'
-    },
-    children: [
-      { path: '401', component: () => import('@/views/errorPage/401'), name: 'page401', meta: { title: 'page401', noCache: true } },
-      { path: '404', component: () => import('@/views/errorPage/404'), name: 'page404', meta: { title: 'page404', noCache: true } }
-    ]
-  },
+  // {
+  //   path: '/error',
+  //   component: Layout,
+  //   redirect: 'noredirect',
+  //   name: 'errorPages',
+  //   meta: {
+  //     title: 'errorPages',
+  //     icon: '404'
+  //   },
+  //   children: [
+  //     { path: '401', component: () => import('@/views/errorPage/401'), name: 'page401', meta: { title: 'page401', noCache: true } },
+  //     { path: '404', component: () => import('@/views/errorPage/404'), name: 'page404', meta: { title: 'page404', noCache: true } }
+  //   ]
+  // },
 
   { path: '*', redirect: '/404', hidden: true }
 ]
