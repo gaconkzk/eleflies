@@ -31,7 +31,7 @@ function createWindow () {
   // mainWindow.webContents.openDevTools()
 
   // enable when need maximize
-  mainWindow.maximize()
+  // mainWindow.maximize()
 
   // no menu
   mainWindow.setMenu(null)

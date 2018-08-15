@@ -211,7 +211,6 @@ export default {
     addCluster() {
       this.$refs.form.validate(valid => {
         let existed = getClusters().filter(it => it.url === this.form.url)
-        console.log(existed)
         if (valid && !existed.length) {
           this.loading = true
           this.$store.dispatch('addCluster', { name: this.form.name, url: this.form.url })

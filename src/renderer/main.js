@@ -8,6 +8,7 @@ import 'element-ui/lib/theme-chalk/index.css'
 
 import App from './App'
 import router from './router'
+
 import store from './store'
 
 import i18n from '@/lang'
@@ -33,6 +34,13 @@ Vue.use(ElementUI, {
 Object.keys(filters).forEach(key => {
   Vue.filter(key, filters[key])
 })
+
+// router.beforeEach((too, from, next) => {
+//   if (too.params.name) {
+//     too.meta.title = too.meta.title + ' ' + too.params.name.toUpperCase()
+//   }
+//   next()
+// })
 
 Vue.config.productionTip = false
 

@@ -5,7 +5,7 @@
                                  v-for="tag in Array.from(visitedViews)"
                                  :to="tag" 
                                  :key="tag.path" 
-                                 @contextmenu.prevent.native="openMenu(tag,$event)") {{generateTitle(tag.title)}}
+                                 @contextmenu.prevent.native="openMenu(tag,$event)") {{generateTitleSmart(tag)}}
         span.el-icon-close(@click.prevent.stop="closeSelectedTag(tag)")
     ul.contextmenu(v-show="visible" :style="{left:left+'px',top:top+'px'}")
       li(@click="closeSelectedTag(selectedTag)") {{$t('tagsView.close')}}
@@ -50,6 +50,18 @@ export default {
   },
   methods: {
     generateTitle, // generateTitle by vue-i18n
+    generateTitleSmart(tag) {
+      let title = this.generateTitle(tag.title)
+      // getting kafka-connect cluster name in tag path
+      let fpath = '/kafka-connect/cluster/'
+      let name = tag.path.substring(tag.path.indexOf(fpath) + fpath.length, tag.path.length)
+      // add name into title
+      if (name && name.length > 0) {
+        return title + ' ' + name.toUpperCase()
+      }
+
+      return title
+    },
     generateRoute() {
       if (this.$route.name) {
         return this.$route

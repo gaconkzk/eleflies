@@ -85,11 +85,22 @@ export const asyncRouterMap = [
     name: 'kafka-connect',
     meta: {
       title: 'kafka-connect',
-      icon: 'kafka-connect' // kafka connect icon
+      icon: 'kafka' // kafka icon
     },
     children: [
-      { path: 'list', component: () => import('@/views/kafka-connect/list'), name: 'clusterList', meta: { title: 'clusterList', icon: 'list' } },
-      { path: 'cluster/:name', component: () => import('@/views/kafka-connect/cluster'), name: 'clusterDetail', meta: { title: 'clusterDetail', icon: 'kafka' }, hidden: true }
+      {
+        path: 'list',
+        component: () => import('@/views/kafka-connect/list'),
+        name: 'clusterList',
+        meta: { title: 'clusterList', icon: 'list' }
+      },
+      {
+        path: 'cluster/:name',
+        component: () => import('@/views/kafka-connect/cluster'),
+        name: 'clusterDetail',
+        meta: { title: 'clusterDetail', icon: 'kafka' },
+        hidden: true
+      }
     ]
   },
   {
