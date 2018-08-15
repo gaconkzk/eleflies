@@ -195,7 +195,10 @@ export default {
       this.chart.setOption({
         tooltip: {
           trigger: 'item',
-          triggerOn: 'mousemove'
+          triggerOn: 'mousemove',
+          formatter: (params, ticket, callback) => {
+            return params.data.tooltip || params.data.value + ' workers'
+          }
         },
         series: [{
           type: 'sankey',

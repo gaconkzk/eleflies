@@ -339,9 +339,26 @@ export default {
         return []
       })
 
-      return compact(uniqBy(nodes,
-        // .concat({ name: 'kafka-topics' }, { name: 'connectors' }),
-        c => c.name))
+      return compact(uniqBy(nodes
+        .concat({
+          name: ' ',
+          itemStyle: {
+            normal: {
+              color: '#ffffff',
+              borderColor: '#ffffff'
+            }
+          }
+        },
+        {
+          name: '  ',
+          itemStyle: {
+            normal: {
+              color: '#ffffff',
+              borderColor: '#ffffff'
+            }
+          }
+        }),
+      c => c.name))
     },
     calLinks() {
       // get source and topic of each connector
@@ -353,26 +370,44 @@ export default {
 
           return flatMap(tp.map(t => {
             if (t !== '') {
-              return [
-                {
-                  source: c.type === 'source' ? c.name : ':' + t,
-                  target: c.type === 'source' ? ':' + t : c.name,
-                  value: c.tasks.length
-                }
-                // {
-                //   source: 'kafka-topics',
-                //   target: ':' + t,
-                //   value: 0.5
-                // }
-              ]
+              let topic = ':' + t
+              if (c.type === 'source') {
+                return [
+                  {
+                    source: c.name,
+                    target: topic,
+                    value: 1
+                  },
+                  {
+                    source: topic,
+                    target: ' ',
+                    value: 0.00001,
+                    lineStyle: {
+                      opacity: 0
+                    }
+                  }
+                ]
+              } else {
+                return [
+                  {
+                    source: '  ',
+                    target: topic,
+                    value: 0.00001,
+                    lineStyle: {
+                      opacity: 0
+                    }
+                  },
+                  {
+                    source: topic,
+                    target: c.name,
+                    value: 1
+                  }
+                ]
+              }
             } else {
               return null
             }
-          })).concat({
-            source: c.name,
-            target: 'connectors',
-            value: 0.5
-          })
+          }))
         }
         return []
       })
