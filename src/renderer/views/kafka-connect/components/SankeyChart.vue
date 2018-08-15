@@ -164,7 +164,6 @@ export default {
   },
   watch: {
     data: function(newVal, oldVal) {
-      console.log(newVal)
       this.updateChart(newVal)
     }
   },
@@ -203,6 +202,8 @@ export default {
           layout: 'none',
           data: this.data.nodes,
           links: this.data.links,
+          animation: false,
+          focusNodeAdjacency: 'allEdges',
           itemStyle: {
             normal: {
               borderWidth: 1,
@@ -224,6 +225,8 @@ export default {
           layout: 'none',
           data: data.nodes,
           links: data.links,
+          animation: false,
+          focusNodeAdjacency: 'allEdges',
           itemStyle: {
             normal: {
               borderWidth: 1,

@@ -315,19 +315,33 @@ export default {
         if (topics) {
           let nodes = topics.split(',').map(t => {
             return t !== '' ? {
-              name: ':' + t
+              name: ':' + t,
+              itemStyle: {
+                normal: {
+                  color: '#6f221b',
+                  borderColor: '#2233bb'
+                }
+              }
             } : null
           })
 
           return compact(nodes).concat([{
-            name: c.name
+            name: c.name,
+            itemStyle: {
+              normal: {
+                color: c.type === 'sink' ? '#3a4f52' : '#72b3b4',
+                borderColor: '#f010a0'
+              }
+            }
           }])
         }
 
         return []
       })
 
-      return compact(uniqBy(nodes, c => c.name))
+      return compact(uniqBy(nodes,
+        // .concat({ name: 'kafka-topics' }, { name: 'connectors' }),
+        c => c.name))
     },
     calLinks() {
       // get source and topic of each connector
@@ -337,12 +351,27 @@ export default {
         if (topics) {
           let tp = topics.split(',')
 
-          return tp.map(t => {
-            return t !== '' ? {
-              source: c.type === 'source' ? c.name : ':' + t,
-              target: c.type === 'source' ? ':' + t : c.name,
-              value: c.tasks.length
-            } : null
+          return flatMap(tp.map(t => {
+            if (t !== '') {
+              return [
+                {
+                  source: c.type === 'source' ? c.name : ':' + t,
+                  target: c.type === 'source' ? ':' + t : c.name,
+                  value: c.tasks.length
+                }
+                // {
+                //   source: 'kafka-topics',
+                //   target: ':' + t,
+                //   value: 0.5
+                // }
+              ]
+            } else {
+              return null
+            }
+          })).concat({
+            source: c.name,
+            target: 'connectors',
+            value: 0.5
           })
         }
         return []
