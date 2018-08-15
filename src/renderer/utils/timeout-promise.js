@@ -1,13 +1,3 @@
-// interval(5000, fn)
-export function interval(ms, fn) {
-  let timerId = setTimeout(function tick() {
-    fn()
-    timerId = setTimeout(tick, ms)
-  }, ms)
-
-  return timerId
-}
-
 export function timeoutPromise(ms, promise) {
   // Create a promise that rejects in <ms> milliseconds
   let timeout = new Promise((resolve, reject) => {

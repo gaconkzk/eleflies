@@ -5,7 +5,7 @@
       el-col(:xs="24" :sm="24" :lg="12")
         el-card
           .clearfix(slot="header")
-            span {{totals}} connectors
+            span(v-loading="loading") {{totals}} connectors
             el-button(style="float:right; padding: 3px 0" type="text") NEW
           //- .item
           //-   el-autocomplete(placeholder="Search" suffix-icon="el-icon-search" v-model="searchInput"
@@ -35,6 +35,14 @@
                 svg-icon(icon-class="right-arrow" size="small" style="margin-top:10px;margin-right:10px")
                 svg-icon(v-if="scope.row.type==='source'" icon-class="kafka" size="small" style="margin-top:10px")
                 el-tag(v-else size="small" width="60px"  style="margin-top:10px" :type="connectorTagType(connectorType(scope.row.config['connector.class']))") {{connectorType(scope.row.config['connector.class'])}}
+            el-table-column
+              template(slot-scope="scope")
+                el-button(size="small" icon="el-icon-delete" circle type="danger")
+                //- el-button(size="small" icon="el-icon-refresh" circle)
+                //- el-button(size="small" circle)
+                //-   svg-icon(icon-class="pause")
+                //- el-button(size="small" circle)
+                //-   svg-icon(icon-class="play")
               //- el-col.card-panel-icon-wrapper.icon-kafka
               //-     svg-icon(icon-class="kafka" class-name="card-panel-icon")
               //- el-col.card-panel-description
@@ -42,6 +50,24 @@
               //-   count-to.card-panel-num(:startVal="0" :endVal="connector.tasks.length" :duration="500")
               //-   count-to.card-panel-num(:startVal="0" :endVal="connector.failed.length" :duration="500")
       el-col(:xs="24" :sm="24" :lg="12")
+        el-card
+          template(slot="header")
+            span {{$route.params.name.toUpperCase()}}
+            .right-place
+              el-button
+                svg-icon(icon-class="export")
+                |  Export
+              //- el-button RESTART
+              //- el-button PAUSE
+              //- el-button RESUME
+          el-col(:xs="8" :sm="8" :lg="8")
+            el-card(shadow="always" align="center") {{connectors.filter(c => c.type === 'source').length}} SOURCES
+          el-col(:xs="8" :sm="8" :lg="8")
+            el-card(shadow="always" align="center") {{connectors.filter(c => c.type === 'sink').length}} SINKS
+          el-col(:xs="8" :sm="8" :lg="8")
+            el-card(shadow="always" align="center") {{uniqueTopics().length}} TOPICS
+        .chart-wrapper
+          sankey-chart(:data="{ 'nodes': calNodes(), 'links': calLinks() }")
         p connectors dashboard
           | <br/>
           | total sinks<br/>
@@ -64,12 +90,16 @@
 import GithubCorner from '@/components/GithubCorner'
 import CountTo from 'vue-count-to'
 import MDinput from '@/components/MDinput'
+import SankeyChart from './SankeyChart'
 import Sticky from '@/components/Sticky'
 import { validateURL } from '@/utils/validate'
 import { clearTimeout } from 'timers'
 
 import { getClusters } from '@/utils/cluster'
+import { timeoutPromise } from '@/utils/timeout-promise'
 import { fetchList, fetchInformation, fetchStatus } from '@/api/kafka-connect'
+
+import { uniq, uniqBy, compact, flatMap } from 'lodash'
 
 const defaultForm = {
   restUrls: 'localhost:8084'
@@ -77,7 +107,7 @@ const defaultForm = {
 
 export default {
   name: 'clusterDetail',
-  components: { GithubCorner, MDinput, Sticky, CountTo },
+  components: { GithubCorner, MDinput, Sticky, CountTo, SankeyChart },
   props: {
     isEdit: {
       type: Boolean,
@@ -229,27 +259,26 @@ export default {
         return fetchInformation(url, connector)
       })
 
-      return Promise.all(promises)
+      return timeoutPromise(2000, Promise.all(promises))
     },
     fetchConnectorStatus(url, data) {
       let promises = data.map(connector => {
         return Promise.all([fetchStatus(url, connector.name), connector.config])
       })
 
-      return Promise.all(promises)
+      return timeoutPromise(2000, Promise.all(promises))
     },
     syncInformation() {
+      this.loading = true
       let name = this.$route.params.name
       let cluster = getClusters().find(v => v.name.toLowerCase() === name)
-
-      // Seem I do lot of things here - not good but I don't know other way ;(
-      // I don't know how to code js properly
-      // get list of connector
+      // get list of connector in the cluster
       if (cluster) {
-        fetchList(cluster.url)
+        timeoutPromise(2000, fetchList(cluster.url))
           .then(this.fetchConnectorInfo.bind(null, cluster.url))
           .then(this.fetchConnectorStatus.bind(null, cluster.url))
           .then((data) => {
+            this.loading = false
             this.totals = data.length
             this.connectors = data.map(info => {
               let merged = Object.assign(info[0], { config: info[1] })
@@ -259,18 +288,67 @@ export default {
               merged.running = merged.tasks.filter(task => task.state === 'RUNNING')
               merged.failed = merged.tasks.filter(task => task.state === 'FAILED')
 
-              // let idx = this.connectors.findIndex(s => s.name === merged.name)
-              // if (idx >= 0) {
-              //   this.connectors.splice(idx, 1, merged)
-              // } else {
-              //   this.connectors.push(merged)
-              // }
-
               return merged
             })
           })
-          .catch((err) => console.error(err))
+          .catch((err) => {
+            console.error(err)
+            this.totals = 0
+            this.loading = false
+            this.connectors = []
+            this.$message({
+              message: err.message,
+              type: 'error',
+              duration: 1000
+            })
+          })
       }
+    },
+    uniqueTopics() {
+      let topics = this.connectors.map(c => c.config.topics)
+      return compact(uniq(topics))
+    },
+    calNodes() {
+      let nodes = flatMap(this.connectors, c => {
+        let topics = c.config.topics || c.config['connect.kcql.topics']
+
+        if (topics) {
+          let nodes = topics.split(',').map(t => {
+            return t !== '' ? {
+              name: ':' + t
+            } : null
+          })
+
+          return compact(nodes).concat([{
+            name: c.name
+          }])
+        }
+
+        return []
+      })
+
+      return compact(uniqBy(nodes, c => c.name))
+    },
+    calLinks() {
+      // get source and topic of each connector
+      let links = flatMap(this.connectors, c => {
+        let topics = c.config.topics || c.config['connect.kcql.topics']
+
+        if (topics) {
+          let tp = topics.split(',')
+
+          return tp.map(t => {
+            return t !== '' ? {
+              source: c.type === 'source' ? c.name : ':' + t,
+              target: c.type === 'source' ? ':' + t : c.name,
+              value: c.tasks.length
+            } : null
+          })
+        }
+        return []
+      })
+
+      return compact(uniq(links))
     }
   },
   created() {
@@ -321,73 +399,18 @@ export default {
     margin-top: 10px;
     margin-right: 40px;
   }
-  // .card-panel {
-  //   height: 98px;
-  //   cursor: pointer;
-  //   font-size: 12px;
-  //   position: relative;
-  //   overflow: hidden;
-  //   color: #666;
-  //   background: #fff;
-  //   box-shadow: 4px 4px 40px rgba(0, 0, 0, .05);
-  //   border-color: rgba(0, 0, 0, .05);
-  //   &:hover {
-  //     .card-panel-icon-wrapper {
-  //       color: #fff;
-  //     }
-  //     .icon-people {
-  //        background: #40c9c6;
-  //     }
-  //     .icon-message {
-  //       background: #36a3f7;
-  //     }
-  //     .icon-money {
-  //       background: #f4516c;
-  //     }
-  //     .icon-shoppingCard {
-  //       background: #34bfa3
-  //     }
-  //   }
-  //   .icon-kafka {
-  //     color: black;
-  //   }
-  //   .icon-message {
-  //     color: #36a3f7;
-  //   }
-  //   .icon-money {
-  //     color: #f4516c;
-  //   }
-  //   .icon-shoppingCard {
-  //     color: #34bfa3
-  //   }
-  //   .card-panel-icon-wrapper {
-  //     float: left;
-  //     margin: 14px 0 0 14px;
-  //     padding: 16px;
-  //     transition: all 0.38s ease-out;
-  //     border-radius: 6px;
-  //   }
-  //   .card-panel-icon {
-  //     float: left;
-  //     font-size: 48px;
-  //   }
-  //   .card-panel-description {
-  //     float: right;
-  //     font-weight: bold;
-  //     margin: 26px;
-  //     margin-left: 0px;
-  //     .card-panel-text {
-  //       line-height: 18px;
-  //       color: rgba(0, 0, 0, 0.45);
-  //       font-size: 16px;
-  //       margin-bottom: 12px;
-  //       margin-top: 12px;
-  //     }
-  //     .card-panel-num {
-  //       font-size: 20px;
-  //     }
-  //   }
-  // }
+
+  .right-place {
+    float: right;
+    margin-top: 5px;
+    margin-bottom: 5px;
+  }
+
+  .chart-wrapper {
+    background: #fff;
+    padding: 16px 16px 0;
+    margin-bottom: 32px;
+  }
 }
 
 </style>
