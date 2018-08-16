@@ -10,6 +10,15 @@ export function fetchInformation(base_urls, name) {
   })
 }
 
+export function fetchConnectorPlugins(base_urls) {
+  let url = base_urls.split(',')[0]
+  url = url.startsWith('http') ? url : 'http://' + url
+  return xservice({
+    url: url + '/connector-plugins',
+    method: 'get'
+  })
+}
+
 export function fetchStatus(base_urls, name) {
   let url = base_urls.split(',')[0]
   url = url.startsWith('http') ? url : 'http://' + url

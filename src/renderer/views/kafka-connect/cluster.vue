@@ -17,9 +17,9 @@
     el-dialog(
       title="Add Connector"
       :visible.sync="addConnectorDialogVisible"
-      width="50%"
+      width="70%"
     )
-      span hehe
+      add-connector(:cluster="cluster")
       span(slot="footer")
         el-button(@click="addConnectorDialogVisible = false") Cancel
         el-button(type="primary" @click="addConnectorDialogVisible = false") Confirm
@@ -29,6 +29,7 @@
 import GithubCorner from '@/components/GithubCorner'
 import Connectors from './components/Connectors'
 import ConnectorSummary from './components/ConnectorSummary'
+import AddConnector from './components/AddConnector'
 import { setTimeout, clearTimeout } from 'timers'
 
 import {
@@ -41,11 +42,16 @@ import { fetchList, fetchConnectorInfo, fetchConnectorStatus } from '@/api/kafka
 
 export default {
   name: 'clusterDetail',
-  components: { GithubCorner, Connectors, ConnectorSummary },
+  components: { GithubCorner, Connectors, ConnectorSummary, AddConnector },
   props: {
     isEdit: {
       type: Boolean,
       default: false
+    }
+  },
+  computed: {
+    cluster: function() {
+      return getClusters().find(v => v.name.toLowerCase() === this.$route.params.name)
     }
   },
   data() {
@@ -61,13 +67,11 @@ export default {
   methods: {
     syncInformation() {
       this.loading = true
-      let name = this.$route.params.name
-      let cluster = getClusters().find(v => v.name.toLowerCase() === name)
       // get list of connector in the cluster
-      if (cluster) {
-        timeoutPromise(2000, fetchList(cluster.url))
-          .then(fetchConnectorInfo.bind(null, cluster.url))
-          .then(fetchConnectorStatus.bind(null, cluster.url))
+      if (this.cluster) {
+        timeoutPromise(2000, fetchList(this.cluster.url))
+          .then(fetchConnectorInfo.bind(null, this.cluster.url))
+          .then(fetchConnectorStatus.bind(null, this.cluster.url))
           .then((data) => {
             this.loading = false
             this.totals = data.length
