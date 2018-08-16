@@ -20,9 +20,9 @@
           img.user-avatar(:src="avatar+'?imageView2/1/w/80/h/80'")
           i.el-icon-caret-bottom
         el-dropdown-menu(slot="dropdown")
-          router-link(to="/")
-            el-dropdown-item {{$t('navbar.dashboard')}}
-          // a(target='_blank' href="https://github.com/PanJiaChen/vue-element-admin/")
+          //- router-link(to="/")
+          //-   el-dropdown-item {{$t('navbar.dashboard')}}
+          //- a(target='_blank' href="https://github.com/PanJiaChen/vue-element-admin/")
             el-dropdown-item {{$t('navbar.github')}}
           el-dropdown-item(divided)
             span(@click="logout" style="display:block;") {{$t('navbar.logOut')}}

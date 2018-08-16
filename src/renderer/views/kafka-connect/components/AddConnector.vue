@@ -2,12 +2,14 @@
   el-row(:gutter=10)
     el-col(:xs="24" :sm="12" :lg="12")
       span Sources
-      el-card(v-for = "plugin in sources")
+      el-card(v-for = "plugin in sources" :key="plugin.class")
         span {{ getItem(plugin.class).name }}
+        img(:src="getItem(plugin.class).icon" width="30px" height="30px") 
     el-col(:xs="24" :sm="12" :lg="12")
       span Sinks
       el-card(v-for = "plugin in sinks")
         span {{ getItem(plugin.class).name }}
+        img(:src="getItem(plugin.class).icon" width="30px" height="30px") 
 </template>
 
 <script>

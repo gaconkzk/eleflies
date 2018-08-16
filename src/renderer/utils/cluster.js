@@ -86,7 +86,7 @@ export function calculateTasksStatus(data) {
 export const supportedConnectorsTemplates = [
   {
     name: 'Twitter',
-    icon: 'twitter.png',
+    icon: 'static/imgs/twitter.png',
     description: 'Use the Twitter API to stream data into Kafka',
     type: 'Source',
     uiEnabled: true,
@@ -98,7 +98,7 @@ export const supportedConnectorsTemplates = [
   {
     name: 'Yahoo Finance',
     type: 'Source',
-    icon: 'yahoofinance.png',
+    icon: 'static/imgs/yahoofinance.png',
     description: 'Stream stock and currency exchange rates into Kafka',
     uiEnabled: true,
     color: '#30007b',
@@ -108,7 +108,7 @@ export const supportedConnectorsTemplates = [
   },
   {
     name: 'File',
-    icon: 'file.png',
+    icon: 'static/imgs/file.png',
     description: 'Tail files or folders and stream data into Kafka',
     type: 'Source',
     uiEnabled: true,
@@ -118,7 +118,7 @@ export const supportedConnectorsTemplates = [
   },
   {
     name: 'Ftp',
-    icon: 'ftp.png',
+    icon: 'static/imgs/ftp.png',
     description: 'Tail remote FTP folders and bring messages in Kafka',
     type: 'Source',
     uiEnabled: true,
@@ -129,7 +129,7 @@ export const supportedConnectorsTemplates = [
   },
   {
     name: 'SQL',
-    icon: 'database.png',
+    icon: 'static/imgs/database.png',
     type: 'Source',
     uiEnabled: true,
     color: '#b1b1b1',
@@ -138,7 +138,7 @@ export const supportedConnectorsTemplates = [
   },
   {
     name: 'Blockchain',
-    icon: 'blockchain-logo.jpg',
+    icon: 'static/imgs/blockchain-logo.jpg',
     description: 'Get blockchain.info data into Kafka',
     type: 'Source',
     uiEnabled: true,
@@ -149,7 +149,7 @@ export const supportedConnectorsTemplates = [
   },
   {
     name: 'Jdbc',
-    icon: 'database.png',
+    icon: 'static/imgs/database.png',
     description: 'Stream data from SQL server into Kafka',
     type: 'Source',
     uiEnabled: true,
@@ -159,7 +159,7 @@ export const supportedConnectorsTemplates = [
   },
   {
     name: 'Cassandra',
-    icon: 'cassandra.jpg',
+    icon: 'static/imgs/cassandra.jpg',
     description: 'Extract Cassandra data using the CQL driver into Kafka',
     uiEnabled: true,
     type: 'Source',
@@ -170,7 +170,7 @@ export const supportedConnectorsTemplates = [
   },
   {
     name: 'CassandraCDC',
-    icon: 'cassandra.jpg',
+    icon: 'static/imgs/cassandra.jpg',
     description: 'Extract Cassandra data using the CQL driver into Kafka',
     uiEnabled: true,
     type: 'Source',
@@ -181,7 +181,7 @@ export const supportedConnectorsTemplates = [
   },
   {
     name: 'Bloomberg',
-    icon: 'bloomberg.png',
+    icon: 'static/imgs/bloomberg.png',
     description: 'Use the Bloomberg API to stream data into Kafka',
     type: 'Source',
     uiEnabled: true,
@@ -192,7 +192,7 @@ export const supportedConnectorsTemplates = [
   },
   {
     name: 'JMS',
-    icon: 'jms.png',
+    icon: 'static/imgs/jms.png',
     description: 'Get data from JMS into Kafka',
     type: 'Source',
     uiEnabled: true,
@@ -203,7 +203,7 @@ export const supportedConnectorsTemplates = [
   },
   {
     name: 'MQTT',
-    icon: 'mqtt.png',
+    icon: 'static/imgs/mqtt.png',
     description: 'Read data from MQTT and write them into Kafka',
     type: 'Source',
     uiEnabled: true,
@@ -215,7 +215,7 @@ export const supportedConnectorsTemplates = [
   {
     name: 'RethinkDB',
     type: 'Source',
-    icon: 'rethink.png',
+    icon: 'static/imgs/rethink.png',
     description: 'Source records from RethinkDB into Kafka',
     color: '#4A3A41',
     uiEnabled: true,
@@ -226,7 +226,7 @@ export const supportedConnectorsTemplates = [
   {
     name: 'CoAP',
     type: 'Source',
-    icon: 'coap.png',
+    icon: 'static/imgs/coap.png',
     description: 'Get Constrained Application Protocol data into Kafka',
     color: '#3A3A3A',
     uiEnabled: true,
@@ -237,7 +237,7 @@ export const supportedConnectorsTemplates = [
   {
     name: 'Pulsar',
     type: 'Source',
-    icon: 'pulsar-logo.png',
+    icon: 'static/imgs/pulsar-logo.png',
     description: 'Get data from Pulsar into Kafka',
     color: '#3A3A3A',
     uiEnabled: true,
@@ -248,7 +248,7 @@ export const supportedConnectorsTemplates = [
   {
     name: 'Schemas',
     type: 'Source',
-    icon: 'avro.svg',
+    icon: 'static/imgs/avro.svg',
     description: 'Store Avro schemas in HDFS',
     color: '#3A3A3A',
     uiEnabled: true,
@@ -258,7 +258,7 @@ export const supportedConnectorsTemplates = [
   {
     name: 'Schemas',
     type: 'Source',
-    icon: 'avro.svg',
+    icon: 'static/imgs/avro.svg',
     description: 'Get Avro schemas into Kafka',
     color: '#3A3A3A',
     uiEnabled: true,
@@ -268,7 +268,7 @@ export const supportedConnectorsTemplates = [
   {
     name: 'Kafka Replicator',
     type: 'Source',
-    icon: 'replicate.png',
+    icon: 'static/imgs/replicate.png',
     description: 'Replicate data to another Kafka cluster',
     color: '#3A3A3A',
     uiEnabled: true,
@@ -279,7 +279,7 @@ export const supportedConnectorsTemplates = [
   {
     name: 'Elastic Search',
     color: '#5CB85C',
-    icon: 'elastic.png',
+    icon: 'static/imgs/elastic.png',
     description: 'Write data from Kafka to Elastic Search',
     type: 'Sink',
     uiEnabled: true,
@@ -290,7 +290,7 @@ export const supportedConnectorsTemplates = [
   {
     name: 'Elastic 5',
     color: '#5CB85C',
-    icon: 'elastic.png',
+    icon: 'static/imgs/elastic.png',
     description: 'Write data from Kafka to Elastic Search',
     type: 'Sink',
     uiEnabled: true,
@@ -301,7 +301,7 @@ export const supportedConnectorsTemplates = [
   {
     name: 'Elastic 6',
     color: '#5CB85C',
-    icon: 'elastic.png',
+    icon: 'static/imgs/elastic.png',
     description: 'Write data from Kafka to Elastic Search',
     type: 'Sink',
     uiEnabled: true,
@@ -312,7 +312,7 @@ export const supportedConnectorsTemplates = [
   {
     name: 'MQTT',
     color: '#5CB85C',
-    icon: 'mqtt.png',
+    icon: 'static/imgs/mqtt.png',
     description: 'A Connector and Sink to stream messages from Kafka to a MQTT brokers',
     type: 'Sink',
     uiEnabled: true,
@@ -322,7 +322,7 @@ export const supportedConnectorsTemplates = [
   },
   {
     name: 'Cassandra',
-    icon: 'cassandra.jpg',
+    icon: 'static/imgs/cassandra.jpg',
     description: 'Store Kafka data into Cassandra',
     uiEnabled: true,
     type: 'Sink',
@@ -333,7 +333,7 @@ export const supportedConnectorsTemplates = [
   },
   {
     name: 'InfluxDB',
-    icon: 'influxdb.jpg',
+    icon: 'static/imgs/influxdb.jpg',
     description: 'Store Kafka data into InfluxDB',
     uiEnabled: true,
     type: 'Sink',
@@ -345,7 +345,7 @@ export const supportedConnectorsTemplates = [
   {
     name: 'MongoDB',
     type: 'Sink',
-    icon: 'mongodb.png',
+    icon: 'static/imgs/mongodb.png',
     description: 'Write Kafka data into MongoDB',
     color: '#609959',
     uiEnabled: true,
@@ -357,7 +357,7 @@ export const supportedConnectorsTemplates = [
     name: 'HazelCast',
     type: 'Sink',
     description: 'Store Kafka data into HazelCast (RingBuffer)',
-    icon: 'hazelcast.png',
+    icon: 'static/imgs/hazelcast.png',
     uiEnabled: true,
     color: '#002A36',
     class: 'com.datamountaineer.streamreactor.connect.hazelcast.sink.HazelCastSinkConnector',
@@ -367,7 +367,7 @@ export const supportedConnectorsTemplates = [
   {
     name: 'Pulsar',
     type: 'Sink',
-    icon: 'pulsar-logo.png',
+    icon: 'static/imgs/pulsar-logo.png',
     description: 'Write Kafka data into Pulsar',
     color: '#3A3A3A',
     uiEnabled: true,
@@ -377,7 +377,7 @@ export const supportedConnectorsTemplates = [
   },
   {
     name: 'Jdbc',
-    icon: 'database.png',
+    icon: 'static/imgs/database.png',
     description: 'Store Kafka data into SQL',
     type: 'Sink',
     uiEnabled: true,
@@ -388,7 +388,7 @@ export const supportedConnectorsTemplates = [
   {
     name: 'Amazon S3',
     type: 'Sink',
-    icon: 's3.png',
+    icon: 'static/imgs/s3.png',
     description: 'Store Kafka data into Amazon S3',
     color: '#3A3A3A',
     uiEnabled: true,
@@ -398,7 +398,7 @@ export const supportedConnectorsTemplates = [
   {
     name: 'DocumentDB',
     type: 'Sink',
-    icon: 'documentdb.png',
+    icon: 'static/imgs/documentdb.png',
     description: 'Write Kafka data into Azure Document DB',
     color: '#3A3A3A',
     uiEnabled: true,
@@ -408,7 +408,7 @@ export const supportedConnectorsTemplates = [
   },
   {
     name: 'Redis',
-    icon: 'redis.png',
+    icon: 'static/imgs/redis.png',
     description: 'Store Kafka data into Redis Sorted Sets/Key-Value',
     type: 'Sink',
     uiEnabled: true,
@@ -419,7 +419,7 @@ export const supportedConnectorsTemplates = [
   },
   {
     name: 'Kudu',
-    icon: 'kudu.png',
+    icon: 'static/imgs/kudu.png',
     type: 'Sink',
     description: 'Write Kafka data into Kudu',
     uiEnabled: true,
@@ -431,7 +431,7 @@ export const supportedConnectorsTemplates = [
   {
     name: 'JMS',
     type: 'Sink',
-    icon: 'jms.png',
+    icon: 'static/imgs/jms.png',
     description: 'Store Kafka data into a JMS topic/queue',
     uiEnabled: true,
     color: '#879171',
@@ -443,7 +443,7 @@ export const supportedConnectorsTemplates = [
     name: 'HDFS',
     type: 'Sink',
     description: 'Write Kafka data into HDFS',
-    icon: 'hdfs.png',
+    icon: 'static/imgs/hdfs.png',
     uiEnabled: true,
     color: '#ffcccc',
     class: 'io.confluent.connect.hdfs.HdfsSinkConnector',
@@ -451,7 +451,7 @@ export const supportedConnectorsTemplates = [
   }, {
     name: 'VoltDB',
     type: 'Sink',
-    icon: 'voltdb.png',
+    icon: 'static/imgs/voltdb.png',
     uiEnabled: true,
     description: 'A sink connector to write Kafka data into VoltDB',
     color: '#e8371b',
@@ -461,7 +461,7 @@ export const supportedConnectorsTemplates = [
   },
   {
     name: 'File',
-    icon: 'file.png',
+    icon: 'static/imgs/file.png',
     description: 'Store Kafka data into files',
     type: 'Sink',
     uiEnabled: true,
@@ -472,7 +472,7 @@ export const supportedConnectorsTemplates = [
   {
     name: 'CoAP',
     type: 'Sink',
-    icon: 'coap.png',
+    icon: 'static/imgs/coap.png',
     description: 'Transfer Kafka data into Constrained Application Protocol service',
     color: '#3A3A3A',
     uiEnabled: true,
@@ -482,7 +482,7 @@ export const supportedConnectorsTemplates = [
   },
   {
     name: 'HBase',
-    icon: 'hbase.svg',
+    icon: 'static/imgs/hbase.svg',
     type: 'Sink',
     description: 'Write Kafka data into HBase',
     uiEnabled: true,
@@ -494,7 +494,7 @@ export const supportedConnectorsTemplates = [
   {
     name: 'RethinkDB',
     type: 'Sink',
-    icon: 'rethink.png',
+    icon: 'static/imgs/rethink.png',
     description: 'Store Kafka data into RethinkDb',
     uiEnabled: true,
     color: '#4A3A41',
@@ -505,7 +505,7 @@ export const supportedConnectorsTemplates = [
   {
     name: 'Elastic Search',
     type: 'Sink',
-    icon: 'elastic.png',
+    icon: 'static/imgs/elastic.png',
     description: 'Write Kafka data into Elastic Search',
     uiEnabled: true,
     color: '#4A3A41',
@@ -514,7 +514,7 @@ export const supportedConnectorsTemplates = [
   }, {
     name: 'Druid',
     type: 'Sink',
-    icon: 'druid.png',
+    icon: 'static/imgs/druid.png',
     description: 'Write Kafka data into Apache Druid Search',
     uiEnabled: true,
     color: '#4A3A41',
@@ -524,7 +524,7 @@ export const supportedConnectorsTemplates = [
   {
     name: 'Twitter',
     type: 'Sink',
-    icon: 'twitter.png',
+    icon: 'static/imgs/twitter.png',
     description: 'Push Kafka events to Twitter',
     uiEnabled: true,
     color: '#4A3A41',
