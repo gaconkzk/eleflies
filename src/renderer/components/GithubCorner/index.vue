@@ -13,12 +13,7 @@
 export default {
   methods: {
     openExternal(url) {
-      if (!window) {
-        // TODO no electron in web mode
-        // require('electron').shell.openExternal(url)
-      } else {
-        window.open(url)
-      }
+      window.open(url)
     }
   }
 }

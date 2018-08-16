@@ -1,12 +1,123 @@
 <template lang="pug">
-  cluster-detail
+  .dashboard-container
+    github-corner(style="position: absolute; top: 0px; border: 0; right: 0;")
+    el-row(:gutter=8)
+      el-col.item(:xs="24" :sm="24" :lg="12")
+        el-card
+          .clearfix(slot="header")
+            span(v-loading="loading") {{totals}} connectors
+            el-button(style="float:right; padding: 3px 0" type="text" @click="addConnectorDialogVisible = true") NEW
+
+          .clearfix
+          connectors(:connectors="connectors")
+
+      el-col.item(:xs="24" :sm="24" :lg="12")
+        connector-summary(:connectors="connectors" :name="($route.params.name || '').toUpperCase()")
+
+    el-dialog(
+      title="Add Connector"
+      :visible.sync="addConnectorDialogVisible"
+      width="50%"
+    )
+      span hehe
+      span(slot="footer")
+        el-button(@click="addConnectorDialogVisible = false") Cancel
+        el-button(type="primary" @click="addConnectorDialogVisible = false") Confirm
 </template>
 
 <script>
-import ClusterDetail from './components/ClusterDetail'
+import GithubCorner from '@/components/GithubCorner'
+import Connectors from './components/Connectors'
+import ConnectorSummary from './components/ConnectorSummary'
+import { setTimeout, clearTimeout } from 'timers'
+
+import {
+  getClusters,
+  calculateTasksStatus
+} from '@/utils/cluster'
+
+import { timeoutPromise } from '@/utils/timeout-promise'
+import { fetchList, fetchConnectorInfo, fetchConnectorStatus } from '@/api/kafka-connect'
+
 export default {
-  name: 'cluster',
-  components: { ClusterDetail }
+  name: 'clusterDetail',
+  components: { GithubCorner, Connectors, ConnectorSummary },
+  props: {
+    isEdit: {
+      type: Boolean,
+      default: false
+    }
+  },
+  data() {
+    return {
+      totals: 0,
+      defaultTimeout: 15 * 1000,
+      loading: false,
+      connectors: [],
+      currentTimeouts: null,
+      addConnectorDialogVisible: false
+    }
+  },
+  methods: {
+    syncInformation() {
+      this.loading = true
+      let name = this.$route.params.name
+      let cluster = getClusters().find(v => v.name.toLowerCase() === name)
+      // get list of connector in the cluster
+      if (cluster) {
+        timeoutPromise(2000, fetchList(cluster.url))
+          .then(fetchConnectorInfo.bind(null, cluster.url))
+          .then(fetchConnectorStatus.bind(null, cluster.url))
+          .then((data) => {
+            this.loading = false
+            this.totals = data.length
+            this.connectors = calculateTasksStatus(data)
+          })
+          .catch((err) => {
+            this.loading = false
+            this.totals = 0
+            this.connectors = []
+
+            // Show a simple error message in 1s
+            this.$message({
+              message: err.message,
+              type: 'error',
+              duration: 1000
+            })
+          })
+      }
+    }
+  },
+  created() {
+    this.syncInformation()
+    this.currentTimeouts = setTimeout(function tick(binder) {
+      binder.syncInformation()
+      binder.currentTimeouts = setTimeout(tick, binder.defaultTimeout, binder)
+    }, this.defaultTimeout, this)
+  },
+  destroyed() {
+    clearTimeout(this.currentTimeouts)
+  }
 }
 </script>
 
+<style rel="stylesheet/scss" lang="scss" scoped>
+.dashboard-container {
+  padding: 32px;
+  background-color: rgb(240, 242, 245);
+  
+  .clearfix:before,
+  .clearfix:after {
+    display: table;
+    content: "";
+  }
+  .clearfix:after {
+    clear: both
+  }
+
+  .item {
+    margin-bottom: 18px;
+  }
+}
+
+</style>

@@ -54,6 +54,7 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
+    "codemirror": "^5.39.2",
     "echarts": "^4.1.0",
     "electron-cookies": "heap/electron-cookies",
     "element-ui": "^2.4.5",

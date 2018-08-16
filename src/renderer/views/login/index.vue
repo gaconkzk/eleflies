@@ -23,18 +23,18 @@
       .tips
         span {{$t('login.username')}}: admin
         span {{$t('login.password')}}: {{$t('login.any')}}
-      .tips
-        span(style="margin-right:18px;") {{$t('login.username')}}: editor
-        span {{$t('login.password')}}: {{$t('login.any')}}
+      //- .tips
+      //-   span(style="margin-right:18px;") {{$t('login.username')}}: editor
+      //-   span {{$t('login.password')}}: {{$t('login.any')}}
       
-      el-button.thirdparty-button(type="primary" @click="showDialog=true") {{$t('login.thirdparty')}}
+      //- el-button.thirdparty-button(type="primary" @click="showDialog=true") {{$t('login.thirdparty')}}
 
-    el-dialog(:title="$t('login.thirdparty')" :visible.sync="showDialog" append-to-body)
-      | {{$t('login.thirdpartyTips')}}
-      br
-      br
-      br
-      social-sign
+    //- el-dialog(:title="$t('login.thirdparty')" :visible.sync="showDialog" append-to-body)
+    //-   | {{$t('login.thirdpartyTips')}}
+    //-   br
+    //-   br
+    //-   br
+    //-   social-sign
 </template>
 
 <script>

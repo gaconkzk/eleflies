@@ -62,7 +62,11 @@ export default {
           trigger: 'item',
           triggerOn: 'mousemove',
           formatter: (params, ticket, callback) => {
-            return params.data.tooltip || params.data.value + ' tasks'
+            if (params.dataType === 'node') {
+              return params.data.type
+            }
+
+            return params.data.tooltip
           }
         },
         series: [{
@@ -70,7 +74,7 @@ export default {
           layout: 'none',
           data: this.data.nodes,
           links: this.data.links,
-          animation: false,
+          draggable: false,
           focusNodeAdjacency: 'allEdges',
           itemStyle: {
             normal: {

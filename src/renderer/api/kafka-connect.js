@@ -1,4 +1,5 @@
 import xservice from '@/utils/xrequest'
+import { timeoutPromise } from '@/utils/timeout-promise'
 
 export function fetchInformation(base_urls, name) {
   let url = base_urls.split(',')[0]
@@ -30,8 +31,24 @@ export function fetchTaskStatus(base_urls, name, task) {
 export function fetchList(base_urls) {
   let url = base_urls.split(',')[0]
   url = url.startsWith('http') ? url : 'http://' + url
-  return xservice({
+  return timeoutPromise(2000, xservice({
     url: url + '/connectors',
     method: 'get'
+  }))
+}
+
+export function fetchConnectorInfo(url, data) {
+  let promises = data.map(connector => {
+    return fetchInformation(url, connector)
   })
+
+  return Promise.all(promises)
+}
+
+export function fetchConnectorStatus(url, data) {
+  let promises = data.map(connector => {
+    return Promise.all([fetchStatus(url, connector.name), connector.config])
+  })
+
+  return Promise.all(promises)
 }
