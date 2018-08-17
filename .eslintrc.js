@@ -9,7 +9,7 @@ module.exports = {
     node: true,
     es6: true
   },
-  extends: 'standard',
+  extends: 'eslint:recommended',
   // required to lint *.vue files
   plugins: [
     'html'
@@ -34,6 +34,7 @@ module.exports = {
     'no-debugger': process.env.NODE_ENV === 'production' ? 2 : 0,
     // disable this
     'space-before-function-paren': 0,
+    'no-console': 0,
     'no-control-regex': 0,
     'no-webpack-loader-syntax': 0,
     'camelcase': 0

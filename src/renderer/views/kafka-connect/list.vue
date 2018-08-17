@@ -188,7 +188,7 @@ export default {
       this.$confirm(`This will permanently delete \`${row.name}\`. Continue?`, 'Danger', {
         type: 'error'
       })
-        .then(_ => {
+        .then(() => {
           this.$store.dispatch('removeCluster', { url: row.url })
             .then(() => {
               row.edit = false
@@ -206,7 +206,7 @@ export default {
               })
             })
         })
-        .catch(_ => { console.log(' canceled ') })
+        .catch(() => { console.log(' canceled ') })
     },
     addCluster() {
       this.$refs.form.validate(valid => {

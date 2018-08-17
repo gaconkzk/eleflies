@@ -6,16 +6,16 @@ import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 // import locale from 'element-ui/lib/locale/lang/en' // lang i18n
 
+import '@/assets/scss/index.scss'
+
 import App from './App'
 import router from './router'
-
 import store from './store'
 
 import i18n from '@/lang'
 import '@/icons' // icon
 import '@/errorLog'// error log
 import '@/permission' // permission control
-
 import '@/mock' // simulation data
 
 import * as filters from '@/filters' // global filters
@@ -34,13 +34,6 @@ Vue.use(ElementUI, {
 Object.keys(filters).forEach(key => {
   Vue.filter(key, filters[key])
 })
-
-// router.beforeEach((too, from, next) => {
-//   if (too.params.name) {
-//     too.meta.title = too.meta.title + ' ' + too.params.name.toUpperCase()
-//   }
-//   next()
-// })
 
 Vue.config.productionTip = false
 

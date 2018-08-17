@@ -28,7 +28,7 @@ export default {
     }
   },
   watch: {
-    data: function(newVal, oldVal) {
+    data: function(newVal) {
       this.updateChart(newVal)
     }
   },
@@ -61,7 +61,7 @@ export default {
         tooltip: {
           trigger: 'item',
           triggerOn: 'mousemove',
-          formatter: (params, ticket, callback) => {
+          formatter: (params) => {
             if (params.dataType === 'node') {
               return params.data.type
             }

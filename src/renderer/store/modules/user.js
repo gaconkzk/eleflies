@@ -58,9 +58,9 @@ const user = {
       })
     },
 
-    GetUserInfo({ commit, state }) {
+    GetUserInfo({ commit }, token) {
       return new Promise((resolve, reject) => {
-        getUserInfo(getToken()).then(response => {
+        getUserInfo(token).then(response => {
           if (!response.data) {
             reject(new Error('error trying login'))
           }

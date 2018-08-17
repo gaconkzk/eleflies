@@ -28,7 +28,7 @@ router.beforeEach((to, from, next) => {
       NProgress.done() // current page is dashboard will not trigger afterEach hook, so manually handle it
     } else {
       if (store.getters.roles.length === 0) {
-        store.dispatch('GetUserInfo').then(res => {
+        store.dispatch('GetUserInfo', getToken()).then(res => {
           const roles = res.data.roles // note: roles must be a array! such as: ['editor','develop']
           store.dispatch('GenerateRoutes', { roles }).then(() => {
             router.addRoutes(store.getters.addRouters)
@@ -36,7 +36,7 @@ router.beforeEach((to, from, next) => {
           })
         }).catch((err) => {
           store.dispatch('FedLogOut').then(() => {
-            Message.error(err || 'Verification failed, please login again')
+            Message.error(err || new Error('Verification failed, please login again'))
             next({ path: '/' })
           })
         })

@@ -66,7 +66,7 @@ export function state2Tag(state) {
 }
 
 export function uniqueTopics(connectors) {
-  let topics = this.connectors.map(c => c.config.topics || c.config['connect.kcql.topics'])
+  let topics = connectors.map(c => c.config.topics || c.config['connect.kcql.topics'])
   return compact(uniq(topics))
 }
 
