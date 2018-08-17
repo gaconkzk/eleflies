@@ -39,6 +39,7 @@ export default {
       theme: 'rubyblue',
       lint: true
     })
+
     this.jsonEditor.setValue(JSON.stringify(this.value, null, 2))
     this.jsonEditor.on('change', cm => {
       this.$emit('changed', cm.getValue())

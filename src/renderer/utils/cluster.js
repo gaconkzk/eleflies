@@ -83,6 +83,10 @@ export function calculateTasksStatus(data) {
   })
 }
 
+export function getTemplate(clz) {
+  return supportedConnectorsTemplates.find(s => s.class === clz)
+}
+
 export const supportedConnectorsTemplates = [
   {
     name: 'Twitter',

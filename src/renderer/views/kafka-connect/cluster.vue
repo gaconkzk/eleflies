@@ -13,7 +13,7 @@
 
       el-col.item(:xs="24" :sm="24" :lg="12")
         connector-summary(:connectors="connectors" :name="($route.params.name || '').toUpperCase()")
-
+      
     el-dialog(
       title="Add Connector"
       :visible.sync="addConnectorDialogVisible"
@@ -27,6 +27,7 @@
 
 <script>
 import GithubCorner from '@/components/GithubCorner'
+import JsonEditor from '@/components/JsonEditor'
 import Connectors from './components/Connectors'
 import ConnectorSummary from './components/ConnectorSummary'
 import AddConnector from './components/AddConnector'
@@ -42,7 +43,7 @@ import { fetchList, fetchConnectorInfo, fetchConnectorStatus } from '@/api/kafka
 
 export default {
   name: 'clusterDetail',
-  components: { GithubCorner, Connectors, ConnectorSummary, AddConnector },
+  components: { GithubCorner, Connectors, ConnectorSummary, AddConnector, JsonEditor },
   props: {
     isEdit: {
       type: Boolean,
