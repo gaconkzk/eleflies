@@ -11,8 +11,14 @@ const BabiliWebpackPlugin = require('babili-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 const { VueLoaderPlugin } = require('vue-loader')
+
+function resolve(dir) {
+  return path.join(__dirname, '..', dir)
+}
 
 /**
  * List of node_modules to include in webpack bundle
@@ -182,6 +188,16 @@ if (process.env.NODE_ENV !== 'production') {
   rendererConfig.plugins.push(
     new webpack.DefinePlugin({
       '__static': `"${path.join(__dirname, '../static').replace(/\\/g, '\\\\')}"`
+    }),
+    new FriendlyErrorsPlugin({
+      compilationSuccessInfo: {
+        messages: [
+          `Your application is running here: http://localhost:9080`
+        ]
+      },
+      onErrors: config.dev.notifyOnErrors
+        ? utils.createNotifierCallback()
+        : undefined
     })
   )
 }
@@ -208,6 +224,48 @@ if (process.env.NODE_ENV === 'production') {
       minimize: true
     })
   )
+
+  rendererConfig.optimization = {
+    splitChunks: {
+      chunks: 'all',
+      cacheGroups: {
+        libs: {
+          name: 'chunk-libs',
+          test: /[\\/]node_modules[\\/]/,
+          priority: 10,
+          chunks: 'initial'
+        },
+        elementUI: {
+          name: 'chunk-elementUI',
+          priority: 20,
+          test: /[\\/]node_modules[\\/]element-ui[\\/]/
+        },
+        commons: {
+          name: 'chunk-comomns',
+          test: resolve('src/components'),
+          minChunks: 3,
+          priority: 5,
+          reuseExistingChunk: true
+        }
+      }
+    },
+    runtimeChunk: 'single',
+    minimizer: [
+      new UglifyJsPlugin({
+        uglifyOptions: {
+          mangle: {
+            safari10: true
+          }
+        },
+        sourceMap: config.build.productionSourceMap,
+        cache: true,
+        parallel: true
+      }),
+      // Compress extracted CSS. We are using this plugin so that possible
+      // duplicated CSS from different components can be deduped.
+      new OptimizeCSSAssetsPlugin()
+    ]
+  }
 }
 
 module.exports = rendererConfig

@@ -35,6 +35,7 @@ module.exports = {
     // disable this
     'space-before-function-paren': 0,
     'no-control-regex': 0,
+    'no-webpack-loader-syntax': 0,
     'camelcase': 0
   }
 }

@@ -1,5 +1,9 @@
 <template lang="pug">
-  el-row(:gutter=10)
+  el-form(ref="form" :model="form" label-width="90px")
+    el-form-item(label="JSON Config")
+      .editor-container
+        json-editor(v-model="form.config" ref="jsonEditor")
+  //- el-row(:gutter=10)
     el-col(:xs="24" :sm="12" :lg="12")
       span Sources
       el-card(v-for = "plugin in sources" :key="plugin.class")
@@ -13,9 +17,11 @@
 </template>
 
 <script>
+import JsonEditor from '@/components/JsonEditor'
 import { fetchConnectorPlugins } from '@/api/kafka-connect'
 import { supportedConnectorsTemplates } from '@/utils/cluster'
 export default {
+  components: { JsonEditor },
   props: {
     cluster: {
       type: Object,
@@ -32,6 +38,9 @@ export default {
   },
   data() {
     return {
+      form: {
+        config: {}
+      },
       plugins: []
     }
   },
@@ -49,3 +58,10 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.editor-container{
+  position: relative;
+  height: 100%;
+}
+</style>

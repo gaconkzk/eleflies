@@ -11,7 +11,8 @@ import 'codemirror/theme/rubyblue.css'
 import 'codemirror/mode/javascript/javascript'
 import 'codemirror/addon/lint/lint'
 import 'codemirror/addon/lint/json-lint'
-// require('script-loader!jsonlint')
+
+require('jsonlint')
 
 export default {
   name: 'jsonEditor',
@@ -35,6 +36,8 @@ export default {
       mode: 'application/json',
       gutters: ['CodeMirror-lint-markers'],
       theme: 'rubyblue',
+      cursorHeight: 0.68,
+      cursorScrollMargin: 10,
       lint: true
     })
     this.jsonEditor.setValue(JSON.stringify(this.value, null, 2))
