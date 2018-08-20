@@ -87,6 +87,26 @@ export function getTemplate(clz) {
   return supportedConnectorsTemplates.find(s => s.class === clz)
 }
 
+export function generateJsonConfig(configs, groups) {
+  // this having groups???
+  let isGroups = groups && groups.length
+  let jsonConfig = {}
+  if (isGroups) {
+    groups.map(g => configs.filter(c => c.definition.group === g)
+      .forEach(c => {
+        jsonConfig[c.definition.name] = c.definition['default_value'] || null
+      }))
+  }
+
+  configs.filter(c => {
+    return groups.indexOf(c.definition.group)<0
+  }).forEach(c => {
+    jsonConfig[c.definition.name] = c.definition['default_value'] || null
+  })
+
+  return jsonConfig
+}
+
 export const supportedConnectorsTemplates = [
   {
     name: 'Twitter',

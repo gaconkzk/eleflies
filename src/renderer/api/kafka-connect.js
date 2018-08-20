@@ -1,5 +1,6 @@
 import xservice from '@/utils/xrequest'
 import { timeoutPromise } from '@/utils/timeout-promise'
+import { omitBy, isNil } from 'lodash'
 
 export function fetchInformation(base_urls, name) {
   let url = base_urls.split(',')[0]
@@ -16,6 +17,49 @@ export function fetchConnectorPlugins(base_urls) {
   return xservice({
     url: url + '/connector-plugins',
     method: 'get'
+  })
+}
+
+export function fetchConnectorConfig(base_urls, clazz, config) {
+  let url = base_urls.split(',')[0]
+  url = url.startsWith('http') ? url : 'http://' + url
+  return xservice({
+    url: url + '/connector-plugins/' + clazz + '/config/validate',
+    method: 'put',
+    data: config || { "connector.class": clazz }
+  })
+}
+
+function getErrorFromData(data) {
+  return new Promise((resolve, reject) => {
+    if (data['error_count'] === 0) {
+      resolve(data)
+    } else {
+      reject({ name: 'Configuration Error', 
+        message: data.configs.filter(c => c.value.errors.length>0)
+                             .map(c => c.value.errors)
+                             .join()
+      })
+    }
+  })
+}
+
+export function validateConnectorConfig(base_urls, config) {
+  let cconfig = omitBy(config, isNil)
+  return fetchConnectorConfig(base_urls, cconfig['connector.class'], cconfig)
+      .then(getErrorFromData)
+}
+
+export function addConnectorPlugin(base_urls, config) {
+  let url = base_urls.split(',')[0]
+  url = url.startsWith('http') ? url : 'http://' + url
+  return xservice({
+    url: url + '/connectors/',
+    method: 'post',
+    data: {
+      name: config.name,
+      config: config
+    }
   })
 }
 

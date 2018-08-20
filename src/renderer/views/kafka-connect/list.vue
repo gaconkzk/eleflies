@@ -77,6 +77,7 @@ export default {
       listLoading: true,
       dialogVisible: false,
       currentTimeouts: {},
+      defaultTimeout: 15 * 1000,
       listQuery: {
         page: 1,
         limit: 10
@@ -107,8 +108,8 @@ export default {
 
     this.currentTimeouts = setTimeout(function tick(binder) {
       binder.updateStatus()
-      binder.currentTimeouts = setTimeout(tick, 5000, binder)
-    }, 5000, this)
+      binder.currentTimeouts = setTimeout(tick, binder.defaultTimeout, binder)
+    }, this.defaultTimeout, this)
   },
   destroyed() {
     clearTimeout(this.currentTimeouts)

@@ -19,10 +19,15 @@
       :visible.sync="addConnectorDialogVisible"
       width="70%"
     )
-      add-connector(:cluster="cluster")
-      span(slot="footer")
+      add-connector(:cluster="cluster" ref="addConnector" @successed="this.err = null; addConnectorDialogVisible = false"
+        @failed="handleErr"
+      )
+
+      el-alert(v-if="error!==null" show-icon type="error" :description="error.message" :title="error.name" @close="error = null")
+
+      span(slot="footer")        
         el-button(@click="addConnectorDialogVisible = false") Cancel
-        el-button(type="primary" @click="addConnectorDialogVisible = false") Confirm
+        el-button(type="primary" @click="$refs.addConnector.execute()") Confirm
 </template>
 
 <script>
@@ -62,10 +67,14 @@ export default {
       loading: false,
       connectors: [],
       currentTimeouts: null,
-      addConnectorDialogVisible: false
+      addConnectorDialogVisible: false,
+      error: null
     }
   },
   methods: {
+    handleErr(err) {
+      this.error = err
+    },
     syncInformation() {
       this.loading = true
       // get list of connector in the cluster
