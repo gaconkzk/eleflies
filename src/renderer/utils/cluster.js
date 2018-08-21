@@ -7,6 +7,9 @@ export function getClusters () {
 }
 
 export function connectorType(clas) {
+  if (!clas) {
+    return clas
+  }
   let simpleClass = clas.substring(clas.lastIndexOf('.') + 1, clas.length)
   if (!simpleClass) {
     return clas
@@ -60,6 +63,21 @@ export function state2Tag(state) {
       return 'warning'
     case 'FAILED':
       return 'danger'
+    default:
+      return ''
+  }
+}
+
+export function state2Alert(state) {
+  switch (state) {
+    case 'RUNNING':
+      return 'success'
+    case 'UNASSIGNED':
+      return 'info'
+    case 'PAUSED':
+      return 'warning'
+    case 'FAILED':
+      return 'error'
     default:
       return ''
   }

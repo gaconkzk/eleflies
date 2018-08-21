@@ -22,12 +22,28 @@ export default {
       jsonEditor: false
     }
   },
-  props: ['value'],
+  props: {
+    value: {
+      type: [String, Object],
+      default: {}
+    },
+    readOnly: {
+      type: Boolean,
+      default: false,
+    }
+  },
   watch: {
     value(value) {
       const editor_value = this.jsonEditor.getValue()
       if (value !== editor_value) {
         this.jsonEditor.setValue(JSON.stringify(this.value, null, 2))
+      }
+    },
+    readOnly(value) {
+      let oval = this.jsonEditor.getOption('readOnly')
+      let rval = value === true ? 'nocursor' : false
+      if (oval !== rval) {
+        this.jsonEditor.setOption('readOnly', rval)
       }
     }
   },
@@ -37,6 +53,7 @@ export default {
       mode: 'application/json',
       gutters: ['CodeMirror-lint-markers'],
       theme: 'rubyblue',
+      readOnly: this.readOnly === true ? 'nocursor' : false,
       lint: true
     })
 

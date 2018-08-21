@@ -63,11 +63,57 @@ export function addConnector(base_urls, config) {
   })
 }
 
+export function updateConnector(base_urls, name, config) {
+  let url = base_urls.split(',')[0]
+  url = url.startsWith('http') ? url : 'http://' + url
+  return xservice({
+    url: url + '/connectors/' + name + '/config',
+    method: 'put',
+    data: config
+  })
+}
+
+export function restartTask(base_urls, name, id) {
+  let url = base_urls.split(',')[0]
+  url = url.startsWith('http') ? url : 'http://' + url
+  return xservice({
+    url: url + '/connectors/' + name + '/tasks/' + id + '/restart',
+    method: 'post'
+  })
+}
+
+export function restartConnector(base_urls, name) {
+  let url = base_urls.split(',')[0]
+  url = url.startsWith('http') ? url : 'http://' + url
+  return xservice({
+    url: url + '/connectors/' + name + '/restart',
+    method: 'post'
+  })
+}
+
+export function pauseConnector(base_urls, name) {
+  let url = base_urls.split(',')[0]
+  url = url.startsWith('http') ? url : 'http://' + url
+  return xservice({
+    url: url + '/connectors/' + name + '/pause',
+    method: 'put'
+  })
+}
+
+export function resumeConnector(base_urls, name) {
+  let url = base_urls.split(',')[0]
+  url = url.startsWith('http') ? url : 'http://' + url
+  return xservice({
+    url: url + '/connectors/' + name + '/resume',
+    method: 'put'
+  })
+}
+
 export function deleteConnector(base_urls, name) {
   let url = base_urls.split(',')[0]
   url = url.startsWith('http') ? url : 'http://' + url
   return xservice({
-    url: url + '/connectors/'+name,
+    url: url + '/connectors/' + name,
     method: 'delete'
   })
 }

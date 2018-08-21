@@ -5,21 +5,26 @@
       el-col.item(:xs="24" :sm="24" :lg="12")
         el-card
           .clearfix(slot="header")
-            span(v-loading="loading") {{totals}} connectors
-            el-button(style="float:right; padding: 3px 0" type="text" @click="addConnectorDialogVisible = true") NEW
+            h3(v-loading="loading" @click.prevent="detailVisible=false" style="cursor:pointer; color: blue") {{totals}} connectors
+            el-button(style="float:right; padding: 3px 0" type="text" @click="edit=false; addConnectorDialogVisible = true") NEW
 
           .clearfix
-          connectors(:connectors="connectors")
-
-      el-col.item(:xs="24" :sm="24" :lg="12")
-        connector-summary(:connectors="connectors" :name="($route.params.name || '').toUpperCase()")
+          connectors(:connectors="connectors" 
+                     :cluster="cluster"
+                     @itemClick="handleDetail")
+      el-collapse-transition
+        el-col.item(:xs="24" :sm="24" :lg="12" v-if="!detailVisible")
+          connector-summary(:connectors="connectors" :name="($route.params.name || '').toUpperCase()")
+      el-collapse-transition
+        el-col.item(:xs="24" :sm="24" :lg="12" v-if="detailVisible")
+          connector-detail(:connector="currentConnector" :url="cluster.url" @deleted="detailVisible = false; currentConnector = null; syncInformation()")
       
     el-dialog(
       title="Add Connector"
       :visible.sync="addConnectorDialogVisible"
       width="70%"
     )
-      add-connector(:cluster="cluster" ref="addConnector" @successed="this.err = null; addConnectorDialogVisible = false"
+      add-connector(:cluster="cluster" ref="addConnector" @successed="err = null; syncInformation(); addConnectorDialogVisible = false"
         @failed="handleErr"
       )
 
@@ -35,6 +40,7 @@ import GithubCorner from '@/components/GithubCorner'
 import JsonEditor from '@/components/JsonEditor'
 import Connectors from './components/Connectors'
 import ConnectorSummary from './components/ConnectorSummary'
+import ConnectorDetail from './components/ConnectorDetail'
 import AddConnector from './components/AddConnector'
 import { setTimeout, clearTimeout } from 'timers'
 
@@ -48,13 +54,7 @@ import { fetchList, fetchConnectorInfo, fetchConnectorStatus } from '@/api/kafka
 
 export default {
   name: 'clusterDetail',
-  components: { GithubCorner, Connectors, ConnectorSummary, AddConnector, JsonEditor },
-  props: {
-    isEdit: {
-      type: Boolean,
-      default: false
-    }
-  },
+  components: { GithubCorner, Connectors, ConnectorSummary, AddConnector, JsonEditor, ConnectorDetail },
   computed: {
     cluster: function() {
       return getClusters().find(v => v.name.toLowerCase() === this.$route.params.name)
@@ -68,10 +68,16 @@ export default {
       connectors: [],
       currentTimeouts: null,
       addConnectorDialogVisible: false,
+      detailVisible: false,
+      currentConnector: null,
       error: null
     }
   },
   methods: {
+    handleDetail(row) {
+      this.currentConnector = Object.assign({}, row)
+      this.detailVisible = true
+    },
     handleErr(err) {
       this.error = err
     },

@@ -6,11 +6,6 @@
         clearable
       )
         template(slot-scope="{ item }")
-          //- el-tooltip(:hide-after="3000")
-            //- div(slot="content") 
-              span Description: {{item.description}}
-              br
-              span Class: {{item.class}}
           el-row(:gutter=2)
             el-col(:xs="4" :sm="4" :lg="4")
               img.circle(:src="item.icon" width="25px" height="25px")

@@ -4,7 +4,7 @@
       el-row
         span {{name}}
         .right-place
-          el-button(size="small")
+          el-button(size="small" @click="exportConfig")
             svg-icon(icon-class="export")
             |  Export
     el-row(:gutter=10 background="black")
@@ -47,7 +47,15 @@ export default {
   methods: {
     calNodes,
     calLinks,
-    uniqueTopics
+    uniqueTopics,
+    exportConfig() {
+      this.$notify({
+            title: 'Not Implemented',
+            message: 'This feature not implemented yet... Please help',
+            type: 'info',
+            duration: 2000
+          })
+    }
   }
 }
 </script>
