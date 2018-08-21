@@ -50,7 +50,7 @@ export function validateConnectorConfig(base_urls, config) {
       .then(getErrorFromData)
 }
 
-export function addConnectorPlugin(base_urls, config) {
+export function addConnector(base_urls, config) {
   let url = base_urls.split(',')[0]
   url = url.startsWith('http') ? url : 'http://' + url
   return xservice({
@@ -60,6 +60,15 @@ export function addConnectorPlugin(base_urls, config) {
       name: config.name,
       config: config
     }
+  })
+}
+
+export function deleteConnector(base_urls, name) {
+  let url = base_urls.split(',')[0]
+  url = url.startsWith('http') ? url : 'http://' + url
+  return xservice({
+    url: url + '/connectors/'+name,
+    method: 'delete'
   })
 }
 

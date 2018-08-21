@@ -36,7 +36,7 @@ import JsonEditor from '@/components/JsonEditor'
 import {
   fetchConnectorPlugins,
   fetchConnectorConfig,
-  addConnectorPlugin,
+  addConnector,
   validateConnectorConfig
 } from '@/api/kafka-connect'
 import { getTemplate, generateJsonConfig } from '@/utils/cluster'
@@ -78,7 +78,7 @@ export default {
   methods: {
     execute() {
       validateConnectorConfig(this.cluster.url, JSON.parse(this.form.config))
-        .then(addConnectorPlugin.bind(null, this.cluster.url, JSON.parse(this.form.config)))
+        .then(addConnector.bind(null, this.cluster.url, JSON.parse(this.form.config)))
         .then(() => {
           console.log('ok, runit')
           this.$emit("successed", "Connector added")
