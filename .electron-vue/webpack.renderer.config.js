@@ -176,7 +176,7 @@ let rendererConfig = {
       '@': path.join(__dirname, '../src/renderer'),
       '~': path.join(__dirname, '../src/renderer/assets'),
       'vue$': 'vue/dist/vue.esm.js',
-      'eletedb$': path.join(__dirname, '../src/renderer/utils/tedb.js')
+      'eletedb$': path.join(__dirname, '../src/renderer/utils/electron/db.js')
     },
     extensions: ['.js', '.vue', '.json', '.css', '.node']
   },

@@ -139,7 +139,7 @@ let webConfig = {
       '@': path.join(__dirname, '../src/renderer'),
       '~': path.join(__dirname, '../src/renderer/assets'),
       'vue$': 'vue/dist/vue.esm.js',
-      'eletedb$': path.join(__dirname, '../src/renderer/utils/cuki.js')
+      'eletedb$': path.join(__dirname, '../src/renderer/utils/web/db.js')
     },
     extensions: ['.js', '.vue', '.json', '.css']
   },
