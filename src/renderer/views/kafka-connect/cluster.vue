@@ -17,7 +17,10 @@
           connector-summary(:connectors="connectors" :name="($route.params.name || '').toUpperCase()")
       el-collapse-transition
         el-col.item(:xs="24" :sm="24" :lg="12" v-if="detailVisible")
-          connector-detail(:connector="currentConnector" :url="cluster.url" @deleted="detailVisible = false; currentConnector = null; syncInformation()")
+          connector-detail(:connector="currentConnector" :url="cluster.url" 
+                           @deleted="detailVisible = false; currentConnector = null; syncInformation()"
+                           @updated="syncInformation()"
+          )
       
     el-dialog(
       title="Add Connector"
@@ -55,11 +58,6 @@ import { fetchList, fetchConnectorInfo, fetchConnectorStatus } from '@/api/kafka
 export default {
   name: 'clusterDetail',
   components: { GithubCorner, Connectors, ConnectorSummary, AddConnector, JsonEditor, ConnectorDetail },
-  computed: {
-    cluster: function() {
-      return getClusters().find(v => v.name.toLowerCase() === this.$route.params.name)
-    }
-  },
   data() {
     return {
       totals: 0,
@@ -70,7 +68,8 @@ export default {
       addConnectorDialogVisible: false,
       detailVisible: false,
       currentConnector: null,
-      error: null
+      error: null,
+      cluster: null
     }
   },
   methods: {
@@ -83,29 +82,39 @@ export default {
     },
     syncInformation() {
       this.loading = true
-      // get list of connector in the cluster
-      if (this.cluster) {
-        timeoutPromise(2000, fetchList(this.cluster.url))
-          .then(fetchConnectorInfo.bind(null, this.cluster.url))
-          .then(fetchConnectorStatus.bind(null, this.cluster.url))
-          .then((data) => {
-            this.loading = false
-            this.totals = data.length
-            this.connectors = calculateTasksStatus(data)
-          })
-          .catch((err) => {
-            this.loading = false
-            this.totals = 0
-            this.connectors = []
+      getClusters()
+        .then(data => {
+          let lname = (this.$route.params.name || '').toLowerCase()
+          this.cluster = data.find(d => d.name.toLowerCase() === lname)
+          // get list of connector in the cluster
+          if (this.cluster) {
+            timeoutPromise(2000, fetchList(this.cluster.url))
+              .then(fetchConnectorInfo.bind(null, this.cluster.url))
+              .then(fetchConnectorStatus.bind(null, this.cluster.url))
+              .then((data) => {
+                this.loading = false
+                this.totals = data.length
+                this.connectors = calculateTasksStatus(data)
+                // reupdate currentconnector if existed
+                if (this.currentConnector) {
+                  this.currentConnector = Object.assign(this.currentConnector, 
+                    this.connectors.find(c => c.name === this.currentConnector.name))
+                }
+              })
+              .catch((err) => {
+                this.loading = false
+                this.totals = 0
+                this.connectors = []
 
-            // Show a simple error message in 1s
-            this.$message({
-              message: err.message,
-              type: 'error',
-              duration: 1000
-            })
-          })
-      }
+                // Show a simple error message in 1s
+                this.$message({
+                  message: err.message,
+                  type: 'error',
+                  duration: 1000
+                })
+              })
+          }
+        })
     }
   },
   created() {

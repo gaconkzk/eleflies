@@ -15,14 +15,14 @@
         el-tab-pane(label="Status")
           el-alert(style="margin-top: 10px" :closable="false" :type="state2Alert(connector.connector.state)" :description="':P:'+connector.connector.worker_id" :title="connector.connector.state")
           el-input(style="margin-top: 10px" v-if="connector.connector.trace" type="textarea" :rows="5" v-model="connector.connector.trace")
-        el-tab-pane(v-for="task in connector.tasks" :label="'T:'+task.id" :key="task.id")
+        el-tab-pane(v-for="task in tasks" :label="'T:'+task.id" :key="task.id")
           span(slot="label") Task:{{task.id}} &nbsp; &nbsp; <el-button @click.prevent="restart(task.id)" circle icon="el-icon-refresh" plain size="small"></el-button>
           el-col(style="margin-top: 10px")
             el-alert(:closable="false" :type="state2Alert(task.state)" :title="task.worker_id" :description="task.state")
           el-input(v-if="task.trace" type="textarea" :rows="5" v-model="task.trace" style="margin-top: 10px")
     el-row(:gutter=10)
       .editor-container.marginalittle
-          json-editor(v-model="connector.config" ref="jsonEditor" :readOnly="onlyU")
+          json-editor(v-model="config" ref="jsonEditor" :readOnly="onlyU")
     el-row(:gutter=10)
       el-col(:offset="16" :span="8" align="end")
         el-button.marginalittle(type="primary" icon="el-icon-edit" @click="editConfig" style="width:105px") {{this.onlyU ? 'Edit' : 'Cancel'}}
@@ -46,9 +46,18 @@ export default {
       default: null
     }
   },
+  watch: {
+    connector(val) {
+      this.config = val.config
+      this.tasks = val.tasks
+      this.connector = val
+    }
+  },
   data() {
     return {
-      onlyU: true
+      onlyU: true,
+      config: this.connector.config,
+      tasks: this.connector.tasks
     }
   },
   methods: {
@@ -57,7 +66,7 @@ export default {
       this.onlyU = !this.onlyU
     },
     saveConfig() {
-      updateConnector(this.url, this.connector.name, this.connector.config)
+      updateConnector(this.url, this.connector.name, this.config)
         .then(() => {
           this.$notify({
             title: 'Successed',
@@ -65,7 +74,9 @@ export default {
             type: 'success',
             duration: 2000
           })
-          this.onlyU = true    
+          this.onlyU = true
+          //
+           this.$emit('updated', `${this.connector.name} configuration updated`)
         })
         .catch(err => this.$message({
                 message: 'Failed update the connector config. ' + err.message,

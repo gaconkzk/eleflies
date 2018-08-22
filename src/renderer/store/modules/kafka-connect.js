@@ -1,5 +1,5 @@
 import Cookies from 'js-cookie'
-
+// TODO get/set clusters to tedb instead of cookies
 const kafka_connect = {
   state: {
     clusters: JSON.parse(Cookies.get('clusters') || '[]')
@@ -19,11 +19,13 @@ const kafka_connect = {
       }
 
       clusters = clusters.filter(c => c.url !== cluster.url && c.name !== cluster.name)
+
       if (clusters.length) {
         Cookies.set('clusters', clusters)
       } else {
         Cookies.remove('clusters')
       }
+
       state.clusters = clusters
     }
   },

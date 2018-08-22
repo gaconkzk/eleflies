@@ -1,9 +1,21 @@
-import Cookies from 'js-cookie'
-
 import { uniq, compact } from 'lodash'
 
+import { fetchClusters, saveCluster, updateCluster, removeCluster } from 'eletedb'
+
 export function getClusters () {
-  return JSON.parse(Cookies.get('clusters') || '[]')
+  return fetchClusters()
+}
+
+export function addCluster (cluster) {
+  return saveCluster(cluster)
+}
+
+export function deleteCluster (cluster) {
+  return removeCluster(cluster)
+}
+
+export function editCluster (cluster) {
+  return updateCluster(cluster)
 }
 
 export function connectorType(clas) {

@@ -175,7 +175,8 @@ let rendererConfig = {
     alias: {
       '@': path.join(__dirname, '../src/renderer'),
       '~': path.join(__dirname, '../src/renderer/assets'),
-      'vue$': 'vue/dist/vue.esm.js'
+      'vue$': 'vue/dist/vue.esm.js',
+      'eletedb$': path.join(__dirname, '../src/renderer/utils/tedb.js')
     },
     extensions: ['.js', '.vue', '.json', '.css', '.node']
   },

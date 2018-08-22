@@ -138,7 +138,8 @@ let webConfig = {
     alias: {
       '@': path.join(__dirname, '../src/renderer'),
       '~': path.join(__dirname, '../src/renderer/assets'),
-      'vue$': 'vue/dist/vue.esm.js'
+      'vue$': 'vue/dist/vue.esm.js',
+      'eletedb$': path.join(__dirname, '../src/renderer/utils/cuki.js')
     },
     extensions: ['.js', '.vue', '.json', '.css']
   },
