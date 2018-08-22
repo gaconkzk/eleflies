@@ -37,6 +37,8 @@ Object.keys(filters).forEach(key => {
 
 Vue.config.productionTip = false
 
+Vue.prototype.$eventHub = new Vue(); // Global event bus
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

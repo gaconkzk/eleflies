@@ -45,6 +45,12 @@ export default {
       }
     }
   },
+  created() {
+    this.$eventHub.$on('cluster-deleted', this.closeSelectedTag)
+  },
+  beforeDestroy() {
+    this.$eventHub.$off('cluster-deleted')
+  },
   mounted() {
     this.addViewTags()
   },

@@ -173,7 +173,6 @@ export default {
     },
     confirmEdit(row) {
       editCluster(row)
-      // this.$store.dispatch('addCluster', { url: row.url, name: row.name })
         .then(() => {
           row.edit = false
           row.originalUrl = row.url
@@ -206,6 +205,9 @@ export default {
                   message: 'The data has been removed',
                   type: 'success'
                 })
+
+                // update in tagviews
+                this.$eventHub.$emit('cluster-deleted', { path: '/kafka-connect/cluster/'+row.name.toLowerCase() })
               })
               .catch((err) => {
                 row.edit = false
@@ -218,10 +220,10 @@ export default {
         .catch(() => { console.log(' canceled ') })
     },
     addCluster() {
-      this.$refs.form.validate(valid => {
-        let existed = this.list.filter(it => it.url === this.form.url)
-
-        if (valid && !existed.length) {
+      this.$refs.form.validate(() => {
+        let existed = this.list.find(it => it.url === this.form.url || it.name === this.form.name)
+        console.log('existed: ', existed)
+        if (!existed) {
           this.loading = true
           addCluster({ name: this.form.name, url: this.form.url })
             .then(() => {
@@ -245,7 +247,7 @@ export default {
         } else {
           this.loading = false
           this.$message({
-            message: 'Cluster url already existed.',
+            message: 'Cluster name or url already existed.',
             type: 'error'
           })
           return false
