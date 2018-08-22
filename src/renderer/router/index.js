@@ -40,6 +40,17 @@ export const constantRouterMap = [
     //   name: 'dashboard',
     //   meta: { title: 'dashboard', icon: 'dashboard', noCache: true }
     // }]
+  },
+  {
+    path: '/settings',
+    component: Layout,
+    hidden: true,
+    children: [{
+      path: '',
+      component: () => import('@/views/settings/index'),
+      name: 'settings',
+      meta: { title: 'settings', icon: 'settings', noCache: true }
+    }]
   }
 ]
 

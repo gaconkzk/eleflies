@@ -72,7 +72,8 @@ export default {
     dashboard: 'Dashboard',
     github: 'Github',
     screenfull: 'screenfull',
-    theme: 'theme'
+    theme: 'theme',
+    settings: 'Settings'
   },
   login: {
     title: 'Login Form',

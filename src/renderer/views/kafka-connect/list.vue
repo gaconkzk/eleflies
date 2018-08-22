@@ -1,40 +1,42 @@
 <template lang="pug">
-  .app-container
-    el-form(ref="form" :model="form" label-width="120px" :rules="rules")
-      el-form-item(label="Name" prop="name")
-        el-input(v-model="form.name")
-      el-form-item(label="Endpoint:" prop="url")
-        el-input(v-model="form.url")
-      el-form-item
-        el-button(type="primary" @click="addCluster") Add
-      
-    el-table(:data="list" v-loading.body="listLoading" border fit highlight-current-row style="width: 100%" @row-click="toCluster"
-             :row-style="{ 'cursor': 'pointer' }"
-    )
+  .dashboard-container
+    github-corner(style="position: absolute; top: 0px; border: 0; right: 0;")
+    el-row(:gutter="8")
+      el-form(ref="form" :model="form" label-width="120px" :rules="rules")
+        el-form-item(label="Name" prop="name")
+          el-input(v-model="form.name")
+        el-form-item(label="Endpoint:" prop="url")
+          el-input(v-model="form.url")
+        el-form-item
+          el-button(type="primary" @click="addCluster") Add
+        
+      el-table(:data="list" v-loading.body="listLoading" border fit highlight-current-row style="width: 100%" @row-click="toCluster"
+               :row-style="{ 'cursor': 'pointer' }"
+      )
 
-      el-table-column(align="center" label="Name" width="250px")
-        template(slot-scope="scope")
-          //- template(v-if="scope.row.edit")
-          //-   el-input.edit-input(size="small" v-model="scope.row.name")
-          span {{scope.row.name}}
-      
-      el-table-column(align="center" label="Endpoint")
-        template(slot-scope="scope")
-          template(v-if="scope.row.edit")
-            el-input.edit-input(size="small" v-model="scope.row.url")
-          span(v-else) {{scope.row.url}}
-      
-      el-table-column(align="center" label="Version")
-        template(slot-scope="scope")
-          div(v-loading="scope.row.version==='N/A'" element-loading-spinner="el-icon-loading")
-            el-tag(:type="ctype(scope.row.version)") {{scope.row.version}}
+        el-table-column(align="center" label="Name" width="250px")
+          template(slot-scope="scope")
+            //- template(v-if="scope.row.edit")
+            //-   el-input.edit-input(size="small" v-model="scope.row.name")
+            span {{scope.row.name}}
+        
+        el-table-column(align="center" label="Endpoint")
+          template(slot-scope="scope")
+            template(v-if="scope.row.edit")
+              el-input.edit-input(size="small" v-model="scope.row.url")
+            span(v-else) {{scope.row.url}}
+        
+        el-table-column(align="center" label="Version")
+          template(slot-scope="scope")
+            div(v-loading="scope.row.version==='N/A'" element-loading-spinner="el-icon-loading")
+              el-tag(:type="ctype(scope.row.version)") {{scope.row.version}}
 
-      el-table-column(align="center" label="Actions" width="180")
-        template(slot-scope="scope")
-          el-button.cancel-btn(v-if="scope.row.edit" size="small" icon="el-icon-refresh" type="warning" @click="cancelEdit(scope.row)" circle)
-          el-button(v-if="scope.row.edit" type="success" @click="confirmEdit(scope.row)" size="small" icon="el-icon-circle-check-outline" circle)
-          el-button(v-if="scope.row.edit" size="small" icon="el-icon-delete" type="danger" @click="confirmDelete(scope.row)" circle)
-          el-button(v-else type="primary" @click="scope.row.edit=!scope.row.edit" size="small" icon="el-icon-edit" circle)
+        el-table-column(align="center" label="Actions" width="180")
+          template(slot-scope="scope")
+            el-button.cancel-btn(v-if="scope.row.edit" size="small" icon="el-icon-refresh" type="warning" @click="cancelEdit(scope.row)" circle)
+            el-button(v-if="scope.row.edit" type="success" @click="confirmEdit(scope.row)" size="small" icon="el-icon-circle-check-outline" circle)
+            el-button(v-if="scope.row.edit" size="small" icon="el-icon-delete" type="danger" @click="confirmDelete(scope.row)" circle)
+            el-button(v-else type="primary" @click="scope.row.edit=!scope.row.edit" size="small" icon="el-icon-edit" circle)
 </template>
 
 <script>
@@ -44,8 +46,11 @@ import { validateURL } from '@/utils/validate'
 import { serviceStatus } from '@/api/service-status'
 import { setTimeout, clearTimeout } from 'timers'
 
+import GithubCorner from '@/components/GithubCorner'
+
 export default {
   name: 'clusterList',
+  components: { GithubCorner },
   data() {
     const validateRequire = (rule, value, callback) => {
       if (value === '') {
@@ -258,7 +263,25 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+.dashboard-container {
+  padding: 32px;
+  // background-color: rgb(240, 242, 245);
+  
+  .clearfix:before,
+  .clearfix:after {
+    display: table;
+    content: "";
+  }
+  .clearfix:after {
+    clear: both
+  }
+
+  .item {
+    margin-bottom: 18px;
+  }
+}
+
 .edit-input {
   padding-right: 100px;
 }
